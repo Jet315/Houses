@@ -183,8 +183,8 @@ public class Locale {
         noPermissionMessage = ChatColor.translateAlternateColorCodes('&',locale.getString("NoPermission"));
         houseExpireMessage = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseRemainingTime"));
         houseExpired = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseExpired"));
-        blockBrokenInHouse = ChatColor.translateAlternateColorCodes('&',locale.getString("SignNotOnChest"));
-        signNotOnChest = ChatColor.translateAlternateColorCodes('&',locale.getString("BlockBrokenInHouse"));
+        blockBrokenInHouse = ChatColor.translateAlternateColorCodes('&',locale.getString("BlockBrokenInHouse"));
+        signNotOnChest = ChatColor.translateAlternateColorCodes('&',locale.getString("SignNotOnChest"));
         housePurchaseConfirmation = ChatColor.translateAlternateColorCodes('&',locale.getString("HousePurchaseConfirmation"));
         houseUpgradeConfirmation = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUpgradeConfirmation"));
         houseTrustMessage = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseTrustMessage"));
