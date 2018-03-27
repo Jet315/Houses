@@ -92,7 +92,7 @@ public class HouseExpireTask {
                             Core.getInstance().getServer().getPluginManager().callEvent(houseUnclaimEvent);
                             plot.deletePlot(null);
 
-                            Core.getInstance().getDatabase().deleteRecord(housePlayer.getPlayer().getUniqueId().toString());
+                            Core.getInstance().getDb().deleteRecord(housePlayer.getPlayer().getUniqueId().toString());
                             housePlayer.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + "&f&lYour house has been deleted as you did not pay rent"));
                         }
 

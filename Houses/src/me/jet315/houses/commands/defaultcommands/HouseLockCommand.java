@@ -61,7 +61,7 @@ public class HouseLockCommand extends CommandExecutor {
             if(!houseLocked){
                 Core.getInstance().getPlayerManager().getHousePlayerMap().get(p).setIsHouseLocked(false);
 
-                Core.getInstance().getDatabase().setHouseLocked(p.getUniqueId().toString(),false);
+                Core.getInstance().getDb().setHouseLocked(p.getUniqueId().toString(),false);
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseUnlocked()));
                 p.sendTitle(locale.getHouseLockingTitle(),locale.getHouseUnLockedSubTitle(),30,60,10);
             }else{
@@ -78,7 +78,7 @@ public class HouseLockCommand extends CommandExecutor {
 
                 Core.getInstance().getPlayerManager().getHousePlayerMap().get(p).setIsHouseLocked(true);
 
-                Core.getInstance().getDatabase().setHouseLocked(p.getUniqueId().toString(),true);
+                Core.getInstance().getDb().setHouseLocked(p.getUniqueId().toString(),true);
             }
         }else{
             p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseLockedAndNoHouseFound()));

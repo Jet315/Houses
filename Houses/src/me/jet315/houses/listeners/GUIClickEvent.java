@@ -181,7 +181,7 @@ public class GUIClickEvent implements Listener {
         //Update cashed data
         Core.getInstance().getPlayerManager().getHousePlayerMap().get(p).setMillisecondsOfExpirey(futureExpiryDate);
         //Update database
-        Core.getInstance().getDatabase().setHouseRentalTime(p.getUniqueId().toString(), futureExpiryDate);
+        Core.getInstance().getDb().setHouseRentalTime(p.getUniqueId().toString(), futureExpiryDate);
 
         p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getHouseRentExtended().replaceAll("%DAYS%",String.valueOf(days + (days == 1 ? " day" : " days")))));
     }

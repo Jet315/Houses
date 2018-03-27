@@ -52,7 +52,7 @@ public class HouseEvictPlayer extends CommandExecutor {
             if(Core.getInstance().getPlayerManager().getHousePlayerMap().containsKey(targetPlayer)){
                 Core.getInstance().getPlayerManager().getHousePlayerMap().remove(targetPlayer);
             }
-            Core.getInstance().getDatabase().deleteRecord(uuid.toString());
+            Core.getInstance().getDb().deleteRecord(uuid.toString());
 
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + "&aSuccessfully deleted the players '" + args[1] + "' house"));
 

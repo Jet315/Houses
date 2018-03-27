@@ -246,7 +246,7 @@ public class HouseUpgradeCommand extends CommandExecutor {
                     Core.getInstance().getPlayerManager().getHousePlayerMap().get(p).setHouseLevel(houseLevelTo);
 
                     //Update sqllite
-                    Core.getInstance().getDatabase().setHouseLevel(p.getUniqueId().toString(), houseLevelTo);
+                    Core.getInstance().getDb().setHouseLevel(p.getUniqueId().toString(), houseLevelTo);
 
                     //Remove from upgrading list
                     Core.getInstance().getPlayerManager().getHousePlayerMap().get(p).setIsHouseBeingUpgraded(false);

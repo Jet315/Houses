@@ -13,7 +13,7 @@ public class JoinEvent implements Listener{
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
 
-        Core.getInstance().getDatabase().loadHouseValues(e.getPlayer());
+        Core.getInstance().getDb().loadHouseValues(e.getPlayer());
 
     }
 }

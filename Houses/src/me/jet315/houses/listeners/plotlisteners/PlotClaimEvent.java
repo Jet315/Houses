@@ -34,7 +34,7 @@ public class PlotClaimEvent implements Listener{
         String uuid = e.getPlayer().getUniqueId().toString();
         long expiryMilliseconds = System.currentTimeMillis() + (Core.getInstance().getProperties().getGivenRentTime() * 86400000);
         //Save into DB
-        Core.getInstance().getDatabase().setHouseValues(uuid,1,false,expiryMilliseconds);
+        Core.getInstance().getDb().setHouseValues(uuid,1,false,expiryMilliseconds);
 
         //Load into JVM
         HousePlayer housePlayer = new HousePlayer(e.getPlayer(),1,false,expiryMilliseconds,false);

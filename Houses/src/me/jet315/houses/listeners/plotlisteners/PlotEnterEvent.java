@@ -83,7 +83,7 @@ public class PlotEnterEvent implements Listener{
         Callable<Boolean> task = new Callable<Boolean>() {
             public Boolean call() throws Exception {
 
-                return Core.getInstance().getDatabase().isHouseLocked(plotOwnersUUID);
+                return Core.getInstance().getDb().isHouseLocked(plotOwnersUUID);
             }
         };
         //Execute the future
@@ -141,17 +141,25 @@ public class PlotEnterEvent implements Listener{
     }
 
     public void blockPlayerFromEnteringPlot(Plot plot, Player p){
-        p.sendTitle(Core.getInstance().getMessages().getDeniedTitle(), Core.getInstance().getMessages().getDeniedSubTitle(),30,60,30);
+        if(Core.serverVersion.startsWith("v1_12")) {
+            p.sendTitle(Core.getInstance().getMessages().getDeniedTitle(), Core.getInstance().getMessages().getDeniedSubTitle(), 30, 60, 30);
+        }else{
+            p.sendTitle(Core.getInstance().getMessages().getDeniedTitle(), Core.getInstance().getMessages().getDeniedSubTitle());
+        }
         //e.getPlot().addDenied(p.getUniqueId());
         Location plotLoc = plot.getCenter();
         org.bukkit.Location plotMiddle = new org.bukkit.Location(Bukkit.getWorld(plotLoc.getWorld()),plotLoc.getX(),plotLoc.getY(),plotLoc.getZ());
         if(p.isFlying()){
             //Needs a slightly bigger booster if they are flying
             p.setVelocity(p.getLocation().toVector().subtract(plotMiddle.toVector()).divide(new Vector(10,0,10)).setY(0.5));
-            p.playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_GROWL,1,1);
+            if(Core.serverVersion.startsWith("v1_12")) {
+                p.playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_GROWL, 1, 1);
+            }
         }else{
             p.setVelocity(p.getLocation().toVector().subtract(plotMiddle.toVector()).divide(new Vector(15,0,15)).setY(0.5));
-            p.playSound(p.getLocation(), Sound.BLOCK_WOODEN_DOOR_CLOSE,1,1);
+            if(Core.serverVersion.startsWith("v1_12")) {
+                p.playSound(p.getLocation(), Sound.BLOCK_WOODEN_DOOR_CLOSE, 1, 1);
+            }
         }
     }
 }

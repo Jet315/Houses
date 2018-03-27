@@ -23,13 +23,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Core extends JavaPlugin{
 
     private static Core instance;
+    public static String serverVersion;
 
     private GUIProperties properties;
     private Locale messages;
     private Database db;
     private PlayerManager playerManager;
-
-    private boolean isTokenManagerEnabled = false;
 
     /**
      * Vault - An API allowing me to get economy of players
@@ -37,6 +36,7 @@ public class Core extends JavaPlugin{
     private boolean isVaultEnabled = false;
     public static Economy economy = null;
 
+    private boolean isTokenManagerEnabled = false;
 
     public void onEnable(){
         //Just cool knowing how long the plugin takes to enable
@@ -50,6 +50,8 @@ public class Core extends JavaPlugin{
 
         //Load locale
         messages = new Locale(this,properties.getLocale());
+        serverVersion = Bukkit.getServer().getClass().getPackage().getName();
+        serverVersion = serverVersion.substring(serverVersion.lastIndexOf(".") + 1);
 
         //PlayerManager
         playerManager = new PlayerManager();
@@ -89,7 +91,7 @@ public class Core extends JavaPlugin{
          * /Reload support
          */
         for(Player p : Bukkit.getOnlinePlayers()){
-            Core.getInstance().getDatabase().loadHouseValues(p);
+            Core.getInstance().getDb().loadHouseValues(p);
         }
 
     }
@@ -123,7 +125,7 @@ public class Core extends JavaPlugin{
     public GUIProperties getProperties() {
         return properties;
     }
-    public Database getDatabase() {
+    public Database getDb() {
         return db;
     }
 

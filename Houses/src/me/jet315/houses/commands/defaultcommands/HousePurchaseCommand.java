@@ -119,6 +119,7 @@ public class HousePurchaseCommand extends CommandExecutor {
                     return;
                 }else {
                     p.performCommand("p auto");
+
                 }
             }
         },30L);
