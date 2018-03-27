@@ -27,19 +27,23 @@ public class MineEvent implements Listener{
         //They are in the plots world
         if(e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase(properties.getPlotsWorldName())){
             if(e.getBlock().getLocation().getBlockY() >= properties.getGetMaxBuildHeight()){
+
                 if(e.getPlayer().hasPermission("house.admin.build")) return;
+
                 if((e.getBlock().getType() == Material.SIGN_POST || e.getBlock().getType() == Material.WALL_SIGN) && properties.isAllowSignsInHouse()){
                     Sign sign = (Sign) e.getBlock().getState().getData();
                     Block attached = e.getBlock().getRelative(sign.getAttachedFace());
-                    if(attached.getType() == Material.CHEST){
-
-                        return;
+                    if(!(attached.getType() == Material.CHEST)){
+                        e.setCancelled(true);
+                        e.getPlayer().sendMessage(properties.getPluginPrefix() + locale.getSignNotOnChest());
+                    }
+                    return;
                     }
                 }
                 e.setCancelled(true);
-                e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',properties.getPluginPrefix() + locale.getBlockBrokenInHouse()));
+                e.getPlayer().sendMessage(properties.getPluginPrefix() + locale.getBlockBrokenInHouse());
             }
-        }
+
 
     }
 
