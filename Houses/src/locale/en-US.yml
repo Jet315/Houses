@@ -1,0 +1,101 @@
+#The prefix of the plugin is located in the Main Configuration File - The plugin has been created, and shouldn't need much editing of this config
+
+#The message that is shown when a user performs a command without the required permission
+NoPermission: "&cYou do not have permission to do this!"
+
+#The message that is shown at 10,8,6,4 and 2 minutes before the house expires - Replace #MINUTES% with the number of minutes remaining
+HouseRemainingTime: "&c&lYour house will expire in %MINUTES% Minutes &6/house rent"
+#The message that is shown when a house is deleted due to the time being expired
+HouseExpired: "&f&lYour house has been deleted as you did not pay rent"
+
+#The message that is shown when a user places a sign down, not on a chest
+SignNotOnChest: "&cSigns need to be placed on chests!"
+#The message that is shown when a user breaks a block in the house
+BlockBrokenInHouse: "&cYou can only place blocks in your basement!"
+
+#Confirmation message when purchasing a house (Used when clicking in the GUI)
+HousePurchaseConfirmation: "&eType &c&lConfirm&e to confirm this purchase or &C&lCancel&e to cancel."
+#Confirmation message when upgrading a house (Used when clicking in the GUI)
+HouseUpgradeConfirmation: "&eType &c&lConfirm&e to confirm this upgrade or &C&lCancel&e to cancel."
+#The message that is shown when the user is expected to type in a players name, to trust to their house (Used when clicking in the GUI)
+HouseTrustMessage: "&eType the players name you wish to trust, or 'cancel'"
+#The message that is shown when the user is expected to type in a players name, to find their house (Used when clicking in the GUI)
+HouseFindMessage: "&eType the players name of the house you wish to find, or 'cancel'"
+#The message that is shown when a user types 'cancel' in chat
+CommandCanceled: "&eCommand Canceled!"
+NonExistentPlotCommand: "&aHelp &b» &7Unknown command. &aDid you mean /House&7?"
+
+#The message that is shown when the user extends their time past the configuration limit - Replace %DAYS% with the maximum period that they are allowed to rent for
+HouseRentalLimit: "&cYou can only rent for a maximum of %DAYS% days!"
+#When economy is used, the message that is shown when the user does not not have enough $$$ to extend rental period - Replace %RENT% with the rent price needed
+NoFundsEconomyRental: "&cYou do not have $%RENT% to increase rent!"
+#When tokens is used, the message that is shown when the user does not not have enough tokens to extend rental period - Replace %RENT% with the rent price needed
+NoFundsTokensRental: "&cYou do not have %RENT% Tokens to increase rent!"
+
+#The title that is displayed when a user enters a locked house
+DeniedTitle: "&6HOUSES"
+DeniedSubTitle: "&cThis house is Locked!"
+#The message that is shown while a house is upgrading and a player tries to enter
+DeniedHouseUpgrading: "&e&lHouse is Upgrading... &aPlease wait!"
+
+#The title of the houses GUI
+GUITitle: "&6HOUSES &a>"
+
+#Messages shown when player performs commands
+HouseUpgradeNoHome: "&cYou do not have a house to upgrade!"
+HouseUpgradeMaxHouse: "&aYou have the max house level already!"
+HouseUpgradeInProcess: "&aPlease wait for your current house to finish upgrading!"
+HouseUpgradeNotEnoughMoney: "&cYou do not have $%PRICE% to upgrade this house!" #Replace %PRICE% with the price of the upgrade
+HouseUpgradeNotEnoughTokens: "&cYou do not have %PRICE% Tokens to upgrade this house!" #Replace %PRICE% with the price of the upgrade
+
+HouseUntrustNoHome: "&cYou do not have a house to untrust people to!"
+HouseUntrustYourself: "&cYou cannot untrust yourself to your own house!"
+HouseUntrustNeverPlayedBefore: "&cThe player '%PLAYER%' has never played before!" #replace %PLAYER% with the user that they typed in
+HouseUntrustNotTrusted: "&cThis player is not currently trusted" #replace %PLAYER% with the user that they typed in
+HouseUntrustSuccess: "&aThis player is no longer trusted!" #replace %PLAYER% with the user that they typed in
+HouseUntrustError: "Error occurred while processing player, please try again later"
+
+HouseTrustNoHome: "&cYou do not have a house to trust people to!"
+HouseTrustYourself: "&cYou cannot Trust yourself to your own house!"
+HouseTrustNotOnline: "&cThe player '%PLAYER%' is not online!" #replace %PLAYER% with the user that they typed in
+HouseTrustAlreadyTrusted: "&cThis player is already trusted! &aType &6/house untrust %PLAYER%&c to untrust the player." #replace %PLAYER% with the user that they typed in
+HouseTrustSuccess: "&aThis player is now trusted on your home!" #replace %PLAYER% with the user that they typed in
+
+HouseFindNoPlayer: "&cA house for player '%PLAYER%' cannot be found!" #Replace %PLAYER% with the player they typed in
+HouseFindTP: "&aTeleported!"
+
+HouseWorldTPAlreadyInWorld: "&cYou are already in the House World!"
+HouseWorldTP: "&aTeleporting!"
+
+PlayerHasNoHouse: "&cYou do not have a house!"
+
+HouseRentalNoHouse: "&cYou do not have a house to increase rent on!"
+HouseRentExtended: "&a&lSuccessfully &eExtended Rent by &e&l%DAYS%" #%DAYS% will automatically put in a formated version of the rent period, followed by 'day' or 'days'
+
+HousePurchaseAlreadyHasHouse: "&cYou already have a house!"
+HousePurchaseNotEnoughMoney: "&cYou do not have $%PRICE% to purchase a house!" #Replace %PRICE% with the price needed to purchase a house
+HousePurchaseNotEnoughTokens: "&cYou do not have %PRICE% Tokens to purchase a house!" #Replace %PRICE% with the price needed to purchase a house
+HousePurchaseFail: "&cAn error occurred while claiming a house. If you have not been automatically refunded, contact support." #Note that logs will be generated in the instance of something failing
+HouseLocked: "&cLocked House!"
+HouseLockedMessageToVisitors: "&cThis house has been locked!" #players in the plot, who are kicked out, will get this message
+HouseUnlocked: "&aUnlocked House!"
+HouseLockingTitle: "&6HOUSES"
+HouseLockedSubTitle: "&cHouse locked!"
+HouseUnLockedSubTitle: "&aHouse unlocked!"
+HouseLockedAndNoHouseFound: "&cNo House Found!"
+
+#This is an upcoming feature - Currently not implemented. Changing any values below this line will not work
+#If you need a GUI message edited, message me on Spigot (Jet315) and I will compile you a version with this change :)
+#GUI messages
+HouseGUI:
+  slots: 9
+  Items:
+    'TeleportToHouseWorldItem':
+      type: GRASS
+      name: '&a&lHouse World'
+      lore:
+      - '&7Click to Teleport'
+      - '&7to the House World!'
+      - ' '
+      - '&6Alias: /house world'
+
