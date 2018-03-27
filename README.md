@@ -1,5 +1,5 @@
 # Houses
-A way of players purchasing, renting and upgrading their house in Minecraft!
+A way of players purchasing, renting and upgrading their house in Minecraft!<br />
 This repository does not contain the schematics needed for this plugin to fully function. Create your own schematics or purchase the plugin on Spigot to obtain them.
 
 # Information
