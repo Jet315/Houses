@@ -1,5 +1,6 @@
 # Houses
 A way of players purchasing, renting and upgrading their house in Minecraft!
+This repository does not contain the schematics needed for this plugin to fully function. Create your own schematics or purchase the plugin on Spigot to obtain them.
 
 # Information
 Houses provides the ability for players to purchase houses on Plots. Houses are used to store items in and (can be) used to sell items to other players. Players can be charged by the Server to extend house rent and to upgrade their house. This plugin was designed to be a remake of the TitanMC Houses plugin although offers additional functionality. 
