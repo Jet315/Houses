@@ -25,26 +25,24 @@ public class MineEvent implements Listener{
     @EventHandler
     public void onMine(BlockBreakEvent e){
         //They are in the plots world
-        if(e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase(properties.getPlotsWorldName())){
-            if(e.getBlock().getLocation().getBlockY() >= properties.getGetMaxBuildHeight()){
+        if(e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase(properties.getPlotsWorldName())) {
+            if (e.getBlock().getLocation().getBlockY() >= properties.getGetMaxBuildHeight()) {
 
-                if(e.getPlayer().hasPermission("house.admin.build")) return;
+                if (e.getPlayer().hasPermission("house.admin.build")) return;
 
-                if((e.getBlock().getType() == Material.SIGN_POST || e.getBlock().getType() == Material.WALL_SIGN) && properties.isAllowSignsInHouse()){
+                if ((e.getBlock().getType() == Material.SIGN_POST || e.getBlock().getType() == Material.WALL_SIGN) && properties.isAllowSignsInHouse()) {
                     Sign sign = (Sign) e.getBlock().getState().getData();
                     Block attached = e.getBlock().getRelative(sign.getAttachedFace());
-                    if(!(attached.getType() == Material.CHEST)){
-                        e.setCancelled(true);
-                        e.getPlayer().sendMessage(properties.getPluginPrefix() + locale.getSignNotOnChest());
-                    }
-                    return;
+                    if (attached.getType() == Material.CHEST) {
+                        return;
                     }
                 }
+
                 e.setCancelled(true);
                 e.getPlayer().sendMessage(properties.getPluginPrefix() + locale.getBlockBrokenInHouse());
             }
 
-
+        }
     }
 
 
