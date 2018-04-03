@@ -30,6 +30,10 @@ public class PlotEnterEvent implements Listener{
         HouseEnterEvent houseEnterEvent = new HouseEnterEvent(e.getPlayer(),e.getPlot());
         Core.getInstance().getServer().getPluginManager().callEvent(houseEnterEvent);
 
+        if(e.getPlayer().hasPermission("house.admin.bypassentry")){
+            return;
+        }
+
         Set<UUID> plotOwner = e.getPlot().getOwners();
         if(plotOwner.size() == 0){
             return;
