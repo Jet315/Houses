@@ -69,22 +69,9 @@ public class CommandHandler implements org.bukkit.command.CommandExecutor {
                     final CommandExecutor command = commands.get(name);
 
                     if (command.getPermission() != null && !sender.hasPermission(command.getPermission())) {
-                        //Wild card
-                        String[] permission = command.getPermission().split(".");
-                        if(permission.length > 1){
-                            if(permission[1].equalsIgnoreCase("player")){
-                                if(!sender.hasPermission("house.player.*")){
-                                    sender.sendMessage(Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getNoPermissionMessage());
-                                    return true;
-                                }
-                            }else{
-                                sender.sendMessage(Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getNoPermissionMessage());
-                                return true;
-                            }
-                        }else{
                             sender.sendMessage(Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getNoPermissionMessage());
                             return true;
-                        }
+
                     }
 
                     if (!command.isBoth()) {
