@@ -12,6 +12,7 @@ import me.jet315.houses.utils.Locale;
 import me.realized.tm.api.TMAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -105,7 +106,14 @@ public class HousePurchaseCommand extends CommandExecutor {
         p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + "&aLocating a house! Please standby!"));
         if(!p.getWorld().getName().equalsIgnoreCase(Core.getInstance().getProperties().getPlotsWorldName())){
             //Not in the plot world, teleport there
-            p.teleport(Bukkit.getWorld(Core.getInstance().getProperties().getPlotsWorldName()).getSpawnLocation());
+            World world = Bukkit.getWorld(Core.getInstance().getProperties().getPlotsWorldName());
+            if(world != null) {
+                p.teleport(world.getSpawnLocation());
+            }else{
+                refundHouse(p,Core.getInstance().getProperties().getFirstHousePrice());
+                System.out.println("The houses world found does not match the one found in the config.yml - the world '" + Core.getInstance().getProperties().getPlotsWorldName() + "' does not exist. Please modify your world name, or change the config.yml house world name");
+                return;
+            }
         }
         //Reason for the delay is to let the player spawn into the world before doing the command
         Bukkit.getScheduler().runTaskLater(Core.getInstance(), new Runnable() {
