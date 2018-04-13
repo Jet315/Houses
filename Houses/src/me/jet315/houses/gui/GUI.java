@@ -82,7 +82,9 @@ public abstract class GUI{
                         lore.add(ChatColor.YELLOW + "$" + Math.calculateHousePrice(houseLevel(), properties.getHousePriceAlgorithm()));
                     } else if (properties.getEconomyTypeToUpgrade().equalsIgnoreCase("tokens")) {
                         lore.add(ChatColor.YELLOW + "" + Math.calculateHousePrice(houseLevel(), properties.getHousePriceAlgorithm()) + " Tokens!");
-                    } else {
+                    }else if(properties.getEconomyTypeToUpgrade().equalsIgnoreCase("tokenenchant")){
+                        lore.add(ChatColor.YELLOW + "" + Math.calculateHousePrice(houseLevel(), properties.getHousePriceAlgorithm()) + " Tokens!");
+                    } else{
                         lore.add(ChatColor.GRAY + "Nothing!");
                     }
                     lore.add(" ");

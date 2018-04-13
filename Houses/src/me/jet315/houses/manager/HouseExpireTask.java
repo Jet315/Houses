@@ -51,27 +51,27 @@ public class HouseExpireTask {
 
                     //10 Minute warning
                     if (expiryTime < 600000 && expiryTime > 595000) {
-                        housePlayer.getPlayer().sendMessage(locale.getHouseExpireMessage().replaceAll("%MINUTES","10"));
+                        housePlayer.getPlayer().sendMessage(instance.getProperties().getPluginPrefix() + locale.getHouseExpireMessage().replaceAll("%MINUTES%","10"));
                         continue;
                     }
                     //8 Minute warning
                     if (expiryTime < 480000 && expiryTime > 475000) {
-                        housePlayer.getPlayer().sendMessage(locale.getHouseExpireMessage().replaceAll("%MINUTES","8"));
+                        housePlayer.getPlayer().sendMessage(instance.getProperties().getPluginPrefix() + locale.getHouseExpireMessage().replaceAll("%MINUTES%","8"));
                         continue;
                     }
                     //6 Minute warning
                     if (expiryTime < 360000 && expiryTime > 355000) {
-                        housePlayer.getPlayer().sendMessage(locale.getHouseExpireMessage().replaceAll("%MINUTES","6"));
+                        housePlayer.getPlayer().sendMessage(instance.getProperties().getPluginPrefix() + locale.getHouseExpireMessage().replaceAll("%MINUTES%","6"));
                         continue;
                     }
                     //4 Minute warning
                     if (expiryTime < 240000 && expiryTime > 235000) {
-                        housePlayer.getPlayer().sendMessage(locale.getHouseExpireMessage().replaceAll("%MINUTES","4"));
+                        housePlayer.getPlayer().sendMessage(instance.getProperties().getPluginPrefix() + locale.getHouseExpireMessage().replaceAll("%MINUTES%","4"));
                         continue;
                     }
                     //2 Minute warning
                     if (expiryTime < 120000 && expiryTime > 115000) {
-                        housePlayer.getPlayer().sendMessage(locale.getHouseExpireMessage().replaceAll("%MINUTES","2"));
+                        housePlayer.getPlayer().sendMessage(instance.getProperties().getPluginPrefix() + locale.getHouseExpireMessage().replaceAll("%MINUTES%","2"));
                         continue;
                     }
 /*                    //1 Minute warning

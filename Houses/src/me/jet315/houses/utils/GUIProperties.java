@@ -107,6 +107,8 @@ public class GUIProperties extends Properties{
             lore.add(ChatColor.YELLOW +"$" + super.getFirstHousePrice());
         }else if(super.getEconomyTypeToUpgrade().equalsIgnoreCase("tokens")){
             lore.add(ChatColor.YELLOW + "" + super.getFirstHousePrice() + " Tokens!");
+        }else if(super.getEconomyTypeToUpgrade().equalsIgnoreCase("tokenenchant")){
+            lore.add(ChatColor.YELLOW + "" + super.getFirstHousePrice() + " Tokens!");
         }else{
             System.out.println("[Houses] A invalid Economy Upgrade setting has been set: " + super.getEconomyTypeToUpgrade() + " is not a valid type");
             lore.add(ChatColor.RED +"Error - Contact Staff member to check console");

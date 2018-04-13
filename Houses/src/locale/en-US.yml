@@ -11,7 +11,7 @@ HouseExpired: "&f&lYour house has been deleted as you did not pay rent"
 #The message that is shown when a user places a sign down, not on a chest
 SignNotOnChest: "&cSigns need to be placed on chests!"
 #The message that is shown when a user breaks a block in the house
-BlockBrokenInHouse: "&cYou can only place blocks in your basement!"
+BlockBrokenInHouse: "&cYou can only place and break blocks in your basement!"
 
 #Confirmation message when purchasing a house (Used when clicking in the GUI)
 HousePurchaseConfirmation: "&eType &c&lConfirm&e to confirm this purchase or &C&lCancel&e to cancel."
@@ -41,7 +41,7 @@ DeniedHouseUpgrading: "&e&lHouse is Upgrading... &aPlease wait!"
 #The title of the houses GUI
 GUITitle: "&6HOUSES &a>"
 
-#Messages shown when player performs commands
+#Messages shown when player performs commands - The token messages will only apply if you have either TokenManager installed and enabled, or TokenEnchant
 HouseUpgradeNoHome: "&cYou do not have a house to upgrade!"
 HouseUpgradeMaxHouse: "&aYou have the max house level already!"
 HouseUpgradeInProcess: "&aPlease wait for your current house to finish upgrading!"

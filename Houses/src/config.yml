@@ -32,7 +32,7 @@ SQLiteTable: 'Houses'
 
 #PURCHASING AND UPGRADING HOUSES
 #Economy
-#Use VAULT or TOKENS (https://www.spigotmc.org/resources/tokenmanager.8610/)
+#Use VAULT, TOKENS (https://www.spigotmc.org/resources/tokenmanager.8610/) or TOKENENCHANT (https://www.spigotmc.org/resources/tokenenchant.2287/)
 EconomyTypeToUpgrade: TOKENS
 #What should the cost of the first house be?
 FirstHousePrice: 100
@@ -44,7 +44,7 @@ NextHousePrice: "(({CURRENTHOUSELEVEL}*3) * 500)*2"
 #Should houses expire after a certain time?
 ShouldHousesExpire: true
 #What type of economy would you like to use for extending time frames?
-#Use VAULT or TOKENS (https://www.spigotmc.org/resources/tokenmanager.8610/)
+#Use VAULT, TOKENS (https://www.spigotmc.org/resources/tokenmanager.8610/) or TOKENENCHANT (https://www.spigotmc.org/resources/tokenenchant.2287/)
 EconomyTypeToRent: VAULT
 #The cost per day this will cost (Integers only)
 CostToRentPerDay: 50000
@@ -71,8 +71,12 @@ CommandsToBlock:
   - "/p2"
   - "/2"
   - "/plotme"
+  - "/plots"
 
-#Schematic Paste Settings
+#If this is enabled, when a plot is claimed the first schematic will be pasted onto the plot and have the above vectors applied to it.
+#If you want the plot world to pre generate the first level houses, follow this tutorial: https://github.com/IntellectualSites/PlotSquared/wiki/Installation#initial-setup and disable this option
+PasteFirstHouseOnClaim: true
+#Schematic Paste Settings (when a house is claimed)
 #I recommend that the plot sizes are the same sizes as the schematic
 #By default, the schematics need to be moved down two. If you need to move them across or down at all, here is where you do that:
 #VALUES MUST BE INTEGERS
@@ -80,6 +84,11 @@ MoveSchematicXDirection: 0
 MoveSchematicYDirection: -2
 MoveSchematicZDirection: 0
 
-#If this is enabled, when a plot is claimed the first schematic will be pasted onto the plot and have the above vectors applied to it.
-#If you want the plot world to pre generate the first level houses, follow this tutorial: https://github.com/IntellectualSites/PlotSquared/wiki/Installation#initial-setup and disable this option
-PasteFirstHouseOnClaim: true
+
+#Type in the name of the schematic you wish to place down when a house expires. Type "none" if you would like the default plot to show
+#A valid schematic file located in the /houses/schematics folder needs to be present
+#By default it will paste the first schematic in
+SchematicOnExpirey: "house1.schematic"
+MoveExpirySchematicXDirection: 0
+MoveExpirySchematicYDirection: -2
+MoveExpirySchematicZDirection: 0

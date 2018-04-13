@@ -38,6 +38,8 @@ public class Core extends JavaPlugin{
 
     private boolean isTokenManagerEnabled = false;
 
+    private boolean isTokenEnchantEnabled = false;
+
     public void onEnable(){
         //Just cool knowing how long the plugin takes to enable
         long startTime = System.currentTimeMillis();
@@ -78,14 +80,6 @@ public class Core extends JavaPlugin{
         
         System.out.println("[Houses] Initializing Complete - Time took " + String.valueOf(System.currentTimeMillis()-startTime) +"Ms\n");
 
-
-/*        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), new Runnable() {
-            int counter = 1;
-            public void run() {
-
-                System.out.println(counter++);
-            }
-        }, 0L, 1L);*/
 
         /**
          * /Reload support
@@ -158,6 +152,15 @@ public class Core extends JavaPlugin{
                 System.out.println(ChatColor.RED + "[HOUSES ERROR NOTICE] You have Tokens as an economy type enabled yet TokenManager is not installed!");
             }
         }
+
+        if(Bukkit.getPluginManager().isPluginEnabled("TokenEnchant")){
+            isTokenEnchantEnabled = true;
+        }else{
+            if(properties.getEconomyTypeToUpgrade().equalsIgnoreCase("tokenenchant") || properties.getEconomyTypeForRenting().equalsIgnoreCase("tokenenchant")){
+                System.out.println(ChatColor.RED + "[HOUSES ERROR NOTICE] You have TokenEnchant as an economy type enabled yet TokenEnchant is not installed!");
+            }
+        }
+
         //Possible Dependencies
         if(Bukkit.getPluginManager().isPluginEnabled("Vault")){
             isVaultEnabled = true;
@@ -199,6 +202,10 @@ public class Core extends JavaPlugin{
 
     public Locale getMessages() {
         return messages;
+    }
+
+    public boolean isTokenEnchantEnabled() {
+        return isTokenEnchantEnabled;
     }
 
 

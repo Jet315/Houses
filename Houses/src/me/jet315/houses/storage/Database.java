@@ -2,6 +2,7 @@ package me.jet315.houses.storage;
 
 import com.intellectualcrafters.plot.PS;
 import com.intellectualcrafters.plot.object.Plot;
+import com.intellectualcrafters.plot.util.SchematicHandler;
 import me.jet315.houses.Core;
 import me.jet315.houses.events.HouseUnclaimEvent;
 import me.jet315.houses.manager.HousePlayer;
@@ -9,6 +10,7 @@ import me.jet315.houses.utils.UnclaimReason;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -58,6 +60,10 @@ public abstract class Database {
                             HouseUnclaimEvent houseUnclaimEvent = new HouseUnclaimEvent(Bukkit.getOfflinePlayer(uuid),plot, UnclaimReason.TIME_EXPIRY);
                             Core.getInstance().getServer().getPluginManager().callEvent(houseUnclaimEvent);
                             plot.deletePlot(null);
+                            if(!Core.getInstance().getProperties().getSchematicToPasteonExpiry().equalsIgnoreCase("none")){
+                                SchematicHandler.Schematic schematic = SchematicHandler.manager.getSchematic(new File(Core.getInstance().getDataFolder(),"schematics/"+Core.getInstance().getProperties().getSchematicToPasteonExpiry()));
+                                SchematicHandler.manager.paste(schematic, plot,Core.getInstance().getProperties().getMoveExpirySchematicXDirection(),Core.getInstance().getProperties().getMoveExpirySchematicYDirection(),Core.getInstance().getProperties().getMoveExpirySchematicZDirection(),true,null);
+                            }
                         }
                     }
                 }

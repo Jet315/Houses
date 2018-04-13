@@ -96,6 +96,13 @@ public abstract class Properties {
     private int moveSchematicZDirection = 0;
     private boolean shouldPasteFirstHouseOnClaim = true;
 
+
+    private String schematicToPasteOnExpiry = "none";
+    private int moveExpirySchematicXDirection = 0;
+    private int moveExpirySchematicYDirection = 2;
+    private int moveExpirySchematicZDirection = 0;
+
+
     public Properties(FileConfiguration config){
         this.config = config;
     }
@@ -150,6 +157,11 @@ public abstract class Properties {
         moveSchematicYDirection = config.getInt("MoveSchematicYDirection");
         moveSchematicZDirection = config.getInt("MoveSchematicZDirection");
         shouldPasteFirstHouseOnClaim = config.getBoolean("PasteFirstHouseOnClaim");
+
+        schematicToPasteOnExpiry = config.getString("SchematicOnExpirey");
+        moveExpirySchematicXDirection = config.getInt("MoveExpirySchematicXDirection");
+        moveExpirySchematicYDirection = config.getInt("MoveExpirySchematicYDirection");
+        moveExpirySchematicZDirection = config.getInt("MoveExpirySchematicZDirection");
 
     }
 
@@ -279,5 +291,21 @@ public abstract class Properties {
 
     public List<String> getCommandsToBlock() {
         return commandsToBlock;
+    }
+
+    public String getSchematicToPasteonExpiry() {
+        return schematicToPasteOnExpiry;
+    }
+
+    public int getMoveExpirySchematicXDirection() {
+        return moveExpirySchematicXDirection;
+    }
+
+    public int getMoveExpirySchematicYDirection() {
+        return moveExpirySchematicYDirection;
+    }
+
+    public int getMoveExpirySchematicZDirection() {
+        return moveExpirySchematicZDirection;
     }
 }

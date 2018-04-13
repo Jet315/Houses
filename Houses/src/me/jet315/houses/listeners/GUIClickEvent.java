@@ -1,5 +1,6 @@
 package me.jet315.houses.listeners;
 
+import com.vk2gpz.tokenenchant.api.TokenEnchantAPI;
 import me.jet315.houses.Core;
 import me.jet315.houses.utils.GUIProperties;
 import me.jet315.houses.utils.Locale;
@@ -47,33 +48,33 @@ public class GUIClickEvent implements Listener {
                 p.performCommand("house tp");
                 closeAndUpdateInventory(p);
             } else if (properties.getPurchaseHome().getItemMeta().getDisplayName().equalsIgnoreCase(displayName)) {
-                if(properties.isHouseConfirmationMessages()) {
+                if (properties.isHouseConfirmationMessages()) {
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + locale.getHousePurchaseConfirmation()));
                     Core.getInstance().getPlayerManager().getConfirmation().put(p.getName(), "house purchase");
                     Core.getInstance().getPlayerManager().removePlayer(p.getName());
-                }else{
+                } else {
                     p.performCommand("house purchase");
                 }
                 closeAndUpdateInventory(p);
             } else if (properties.getFindHome().getItemMeta().getDisplayName().equalsIgnoreCase(displayName)) {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseFindMessage()));
-                Core.getInstance().getPlayerManager().getConfirmation().put(p.getName(),"house find ");
+                Core.getInstance().getPlayerManager().getConfirmation().put(p.getName(), "house find ");
                 Core.getInstance().getPlayerManager().removePlayer(p.getName());
                 closeAndUpdateInventory(p);
             } else if (properties.getTrustUser().getItemMeta().getDisplayName().equalsIgnoreCase(displayName)) {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseTrustMessage()));
-                Core.getInstance().getPlayerManager().getConfirmation().put(p.getName(),"house trust ");
+                Core.getInstance().getPlayerManager().getConfirmation().put(p.getName(), "house trust ");
                 Core.getInstance().getPlayerManager().removePlayer(p.getName());
                 closeAndUpdateInventory(p);
             } else if (properties.getUpgradeHome().getItemMeta().getDisplayName().equalsIgnoreCase(displayName)) {
                 //p.performCommand("house upgrade");
-                if(properties.isHouseConfirmationMessages()) {
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseUpgradeConfirmation()));
-                Core.getInstance().getPlayerManager().getConfirmation().put(p.getName(),"house upgrade");
-                Core.getInstance().getPlayerManager().removePlayer(p.getName());
-            }else{
-                p.performCommand("house upgrade");
-            }
+                if (properties.isHouseConfirmationMessages()) {
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseUpgradeConfirmation()));
+                    Core.getInstance().getPlayerManager().getConfirmation().put(p.getName(), "house upgrade");
+                    Core.getInstance().getPlayerManager().removePlayer(p.getName());
+                } else {
+                    p.performCommand("house upgrade");
+                }
                 closeAndUpdateInventory(p);
             } else if (properties.getLockedHome().getItemMeta().getDisplayName().equalsIgnoreCase(displayName) || properties.getUnlockedHome().getItemMeta().getDisplayName().equalsIgnoreCase(displayName)) {
                 p.performCommand("house lock");
@@ -109,11 +110,11 @@ public class GUIClickEvent implements Listener {
                 /**
                  * Check user has not got max days already
                  */
-                int daysLeft  = (int) (((Core.getInstance().getPlayerManager().getHousePlayerMap().get(p).getMillisecondsOfExpiry()-System.currentTimeMillis()) / 86400000)) + numberOfDaysToRent;
+                int daysLeft = (int) (((Core.getInstance().getPlayerManager().getHousePlayerMap().get(p).getMillisecondsOfExpiry() - System.currentTimeMillis()) / 86400000)) + numberOfDaysToRent;
                 int maxNumberOfDays = Core.getInstance().getProperties().getMaxAmountOfRentTime();
 
-                if(daysLeft > maxNumberOfDays){
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getHouseRentalLimit().replaceAll("%DAYS%",String.valueOf(maxNumberOfDays))));
+                if (daysLeft > maxNumberOfDays) {
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getHouseRentalLimit().replaceAll("%DAYS%", String.valueOf(maxNumberOfDays))));
                     closeAndUpdateInventory(p);
                     return;
                 }
@@ -133,7 +134,7 @@ public class GUIClickEvent implements Listener {
                         addRent(p, numberOfDaysToRent);
                         closeAndUpdateInventory(p);
                     } else {
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getNoFundsEconomyRental().replaceAll("%RENT%",String.valueOf(rentPrice))));
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getNoFundsEconomyRental().replaceAll("%RENT%", String.valueOf(rentPrice))));
                     }
                     return;
 
@@ -152,7 +153,25 @@ public class GUIClickEvent implements Listener {
                         addRent(p, numberOfDaysToRent);
                         closeAndUpdateInventory(p);
                     } else {
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getNoFundsTokensRental().replaceAll("%RENT%",String.valueOf(rentPrice))));
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getNoFundsTokensRental().replaceAll("%RENT%", String.valueOf(rentPrice))));
+                    }
+
+                    /**
+                     * Purchase the rent using TokenEnchant
+                     */
+                } else if (Core.getInstance().getProperties().getEconomyTypeForRenting().equalsIgnoreCase("tokenenchant")) {
+                    //TokensEnchant is not installed :(
+                    if (!Core.getInstance().isTokenEnchantEnabled()) {
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + "&cTokenEnchant is not installed on the server. Please contact the server owner."));
+                        return;
+                    }
+                    //Check player has the tokens, if so take them away
+                    if (TokenEnchantAPI.getInstance().getTokens(p) >= rentPrice) {
+                        TokenEnchantAPI.getInstance().removeTokens(p, rentPrice);
+                        addRent(p, numberOfDaysToRent);
+                        closeAndUpdateInventory(p);
+                    } else {
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getNoFundsTokensRental().replaceAll("%RENT%", String.valueOf(rentPrice))));
                     }
 
                 } else {
@@ -183,6 +202,6 @@ public class GUIClickEvent implements Listener {
         //Update database
         Core.getInstance().getDb().setHouseRentalTime(p.getUniqueId().toString(), futureExpiryDate);
 
-        p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getHouseRentExtended().replaceAll("%DAYS%",String.valueOf(days + (days == 1 ? " day" : " days")))));
+        p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getHouseRentExtended().replaceAll("%DAYS%", String.valueOf(days + (days == 1 ? " day" : " days")))));
     }
 }

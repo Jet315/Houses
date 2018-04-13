@@ -4,6 +4,7 @@ import com.intellectualcrafters.plot.api.PlotAPI;
 import com.intellectualcrafters.plot.commands.Chat;
 import com.intellectualcrafters.plot.object.Plot;
 import com.intellectualcrafters.plot.object.PlotPlayer;
+import com.vk2gpz.tokenenchant.api.TokenEnchantAPI;
 import me.jet315.houses.Core;
 import me.jet315.houses.commands.CommandExecutor;
 import me.jet315.houses.events.HouseClaimEvent;
@@ -90,9 +91,27 @@ public class HousePurchaseCommand extends CommandExecutor {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHousePurchaseNotEnoughTokens().replaceAll("%PRICE%",String.valueOf(housePrice))));
             }
 
-        }else{
+            /**
+             * Purchase the house using token enchant
+             */
+        }else if(Core.getInstance().getProperties().getEconomyTypeToUpgrade().equalsIgnoreCase("tokenenchant")){
+            //Tokens is not installed :(
+            if(!Core.getInstance().isTokenEnchantEnabled()){
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + "&cTokenEnchant is not installed on the server. Please contact the server owner."));
+                return;
+            }
+            //Check player has the tokens, if so take them away
+            if(TokenEnchantAPI.getInstance().getTokens(p) >= housePrice){
+                TokenEnchantAPI.getInstance().removeTokens(p,housePrice);
+                claimHouse(p);
+            }else{
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHousePurchaseNotEnoughTokens().replaceAll("%PRICE%",String.valueOf(housePrice))));
+            }
+
+        }else {
             p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + "&cAn Economy type for house upgrading cannot be identified. Please contact the server owner."));
         }
+
     }
 
     /**
@@ -150,6 +169,10 @@ public class HousePurchaseCommand extends CommandExecutor {
         }else if(Core.getInstance().getProperties().getEconomyTypeToUpgrade().equalsIgnoreCase("tokens")){
 
             TMAPI.addTokens(p,Core.getInstance().getProperties().getFirstHousePrice());
+            System.out.println(ChatColor.YELLOW + "USER " + p.getName() + " Has been refunded " + amount + " Tokens");
+
+        }else if(Core.getInstance().getProperties().getEconomyTypeToUpgrade().equalsIgnoreCase("tokenenchant")){
+            TokenEnchantAPI.getInstance().removeTokens(p,Core.getInstance().getProperties().getFirstHousePrice());
             System.out.println(ChatColor.YELLOW + "USER " + p.getName() + " Has been refunded " + amount + " Tokens");
         }
         if(p.isOnline()){

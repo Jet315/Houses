@@ -2,6 +2,7 @@ package me.jet315.houses.commands.admincommands;
 
 import com.intellectualcrafters.plot.PS;
 import com.intellectualcrafters.plot.object.Plot;
+import com.intellectualcrafters.plot.util.SchematicHandler;
 import me.jet315.houses.Core;
 import me.jet315.houses.commands.CommandExecutor;
 import me.jet315.houses.events.HouseUnclaimEvent;
@@ -11,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.Set;
 import java.util.UUID;
 
@@ -49,9 +51,15 @@ public class HouseEvictPlayer extends CommandExecutor {
             Core.getInstance().getServer().getPluginManager().callEvent(houseUnclaimEvent);
             plot.deletePlot(null);
 
+            if(!Core.getInstance().getProperties().getSchematicToPasteonExpiry().equalsIgnoreCase("none")){
+                SchematicHandler.Schematic schematic = SchematicHandler.manager.getSchematic(new File(Core.getInstance().getDataFolder(),"schematics/"+Core.getInstance().getProperties().getSchematicToPasteonExpiry()));
+                SchematicHandler.manager.paste(schematic, plot,Core.getInstance().getProperties().getMoveExpirySchematicXDirection(),Core.getInstance().getProperties().getMoveExpirySchematicYDirection(),Core.getInstance().getProperties().getMoveExpirySchematicZDirection(),true,null);
+            }
+
             if(Core.getInstance().getPlayerManager().getHousePlayerMap().containsKey(targetPlayer)){
                 Core.getInstance().getPlayerManager().getHousePlayerMap().remove(targetPlayer);
             }
+
             Core.getInstance().getDb().deleteRecord(uuid.toString());
 
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + "&aSuccessfully deleted the players '" + args[1] + "' house"));
