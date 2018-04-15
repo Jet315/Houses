@@ -4,6 +4,7 @@ import com.intellectualcrafters.plot.object.Location;
 import com.intellectualcrafters.plot.object.Plot;
 import com.intellectualcrafters.plot.object.PlotPlayer;
 import com.intellectualcrafters.plot.util.SchematicHandler;
+import com.vk2gpz.tokenenchant.api.TokenEnchantAPI;
 import me.jet315.houses.Core;
 import me.jet315.houses.commands.CommandExecutor;
 import me.jet315.houses.events.HouseUpgradeEvent;
@@ -118,9 +119,25 @@ public class HouseUpgradeCommand extends CommandExecutor {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseUpgradeNotEnoughTokens().replaceAll("%PRICE%",String.valueOf(housePriceUpgrade))));
             }
 
-        } else {
-            p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + "&cAn Economy type for house upgrading cannot be identified. Please contact the server owner."));
+        }else if(Core.getInstance().getProperties().getEconomyTypeToUpgrade().equalsIgnoreCase("tokenenchant")){
+        //Tokens is not installed :(
+        if(!Core.getInstance().isTokenEnchantEnabled()){
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + "&cTokenEnchant is not installed on the server. Please contact the server owner."));
+            return;
         }
+        //Check player has the tokens, if so take them away
+        if(TokenEnchantAPI.getInstance().getTokens(p) >= housePriceUpgrade){
+            TokenEnchantAPI.getInstance().removeTokens(p,housePriceUpgrade);
+            upgradeHouse(p, plotPlayer.getPlots().iterator().next());
+        }else{
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseUpgradeNotEnoughTokens().replaceAll("%PRICE%",String.valueOf(housePriceUpgrade))));}
+
+    }else {
+        p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + "&cAn Economy type for house upgrading cannot be identified. Please contact the server owner."));
+    }
+
+
+
     }
 
     /**
