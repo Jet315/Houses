@@ -7,6 +7,7 @@ import me.jet315.houses.utils.Locale;
 import me.realized.tm.api.TMAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -38,6 +39,11 @@ public class HouseTPWorldCommand extends CommandExecutor {
         if(p.getWorld().getName().equalsIgnoreCase(Core.getInstance().getProperties().getPlotsWorldName())){
             p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseWorldTPAlreadyInWorld()));
         }else{
+            World world = Bukkit.getWorld(Core.getInstance().getProperties().getPlotsWorldName());
+            if(world == null){
+                p.sendMessage(Core.getInstance().getProperties().getPluginPrefix() + ChatColor.RED + "The world found in the config.yml does not exist! ");
+                return;
+            }
             p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseWorldTP()));
             p.teleport(Bukkit.getWorld(Core.getInstance().getProperties().getPlotsWorldName()).getSpawnLocation());
         }

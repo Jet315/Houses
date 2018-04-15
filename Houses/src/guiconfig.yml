@@ -1,0 +1,300 @@
+
+#This is the GUI shown when a user does not have a house
+NoHouseGUI:
+  slots: 9 #Must be a multiple of 9
+  GUIName: "&bPurchase a home!"
+  Items:
+    TeleportToHouseWorldItem: #Do not edit these names :)
+      type: GRASS
+      data: 0
+      name: '&a&lHouse World'
+      slot: 0 #Slot start at 0
+      commandToPerform: "house world" #Don't see why this needs to be changed, / isn't needed though.
+      lore:
+      - '&7Click to Teleport'
+      - '&7to the House World!'
+      - ' '
+      - '&6Alias: /house world'
+    PurchaseHomeItem:
+      type: WOOD_DOOR
+      data: 0
+      name: '&6&lPurchase a House'
+      slot: 1
+      commandToPerform: "house purchase"
+      lore:
+      - '&7Purchase a House!'
+      - ' '
+      - '&7This will cost you'
+      - '&e$%COST%'
+      - ' '
+      - '&6Alias: /house purchase'
+    FindHomeItem:
+      type: COMPASS
+      data: 0
+      name: '&e&lFind a Players house!'
+      slot: 2
+      commandToPerform: "house find"
+      lore:
+      - '&7Click to find a'
+      - '&7players House!'
+      - ' '
+      - '&6Alias: /house find <player>'
+    CloseInventoryItem:
+      type: BARRIER
+      data: 0
+      name: '&c&lClose Menu'
+      slot: 8
+      commandToPerform: "house closemenu"
+      lore:
+      - ' '
+
+#This GUI is the GUI shown when a user has a house
+HouseGUI:
+  slots: 9 #Must be a multiple of 9
+  GUIName: "&6HOUSES &a>"
+  Items:
+    TeleportToHouseWorldItem: #Do not edit these names :)
+      type: GRASS
+      data: 0
+      name: '&a&lHouse World'
+      slot: 0 #Slot start at 0
+      commandToPerform: "house world" #Don't see why you would need to change this
+      lore:
+      - '&7Click to Teleport'
+      - '&7to the House World!'
+      - ' '
+      - '&6Alias: /house world'
+    TeleportToHouseItem:
+      type: WOOD_DOOR
+      data: 0
+      name: '&a&lTeleport to Home'
+      slot: 1
+      commandToPerform: "house tp"
+      lore:
+      - '&7Click to Teleport'
+      - '&7to your House!'
+      - ' '
+      - '&6Alias: /house tp'
+    FindHomeItem:
+      type: COMPASS
+      data: 0
+      name: '&e&lFind a Players house!'
+      slot: 2
+      commandToPerform: "house find"
+      lore:
+      - '&7Click to find a'
+      - '&7players House!'
+      - ' '
+      - '&6Alias: /house find <player>'
+    TrustPlayerItem:
+      type: PAPER
+      data: 0
+      name: '&c&lTrust a player'
+      slot: 3
+      commandToPerform: "house trust"
+      lore:
+      - '&7Allows a Player To'
+      - '&7Build in your basement!'
+      - ' '
+      - '&6Alias: /house trust <player>'
+    UpgradeHomeItem:
+      type: EMERALD
+      data: 0
+      name: '&6&lUpgrade your House'
+      slot: 4
+      commandToPerform: "house upgrade"
+      lore:
+      - '&7Click to upgrade your'
+      - '&7House!'
+      - ' '
+      - '&cThis will cost you'
+      - '&e$%COST%'
+      - ' '
+      - '&6Alias: /house upgrade'
+    MaxHouseLevel:
+      type: EMERALD
+      data: 0
+      name: '&6&lUpgrade your House'
+      slot: 4
+      commandToPerform: "house closemenu"
+      lore:
+      - '&cMaximum House level'
+      - '&calready achieved!'
+    IncreaseRentItem:
+      type: WATCH
+      data: 0
+      name: '&a&lExtend Rental'
+      slot: 5
+      commandToPerform: "house rent"
+      lore:
+      - '&7Click to add rental'
+      - '&7days to your house!'
+      - ' '
+      - '&cYour house will expire in:'
+      - '%RENTTIMELEFT%'
+      - ' '
+      - '&6Alias: /house rent'
+    LockHomeItem:
+      type: IRON_DOOR
+      data: 0
+      name: '&c&lStatus: LOCKED'
+      slot: 6
+      commandToPerform: "house unlock"
+      lore:
+      - '&7Your house is currently Locked!'
+      - '&7Click to unlock!'
+      - ' '
+      - '&6Alias: /house unlock'
+    UnLockHomeItem:
+      type: IRON_DOOR
+      data: 0
+      name: '&a&lStatus: UNLOCKED'
+      slot: 6
+      commandToPerform: "house Lock"
+      lore:
+      - '&7Your house is currently Unlocked!'
+      - '&7Click to Lock!'
+      - ' '
+      - '&6Alias: /house lock'
+#If you want the abandon home item to appear, just uncomment :)
+#    AbandonHome:
+#      type: INK_SAC
+#      data: 1
+#      name: '&c&lAbandon Home'
+#      slot: 7
+#      commandToPerform: "house abandon"
+#      lore:
+#      - '&7Click to abandon'
+#      - '&7your home!'
+#      - ' '
+#      - '&6Alias: /house abandon'
+    CloseInventoryItem:
+      type: BARRIER
+      data: 0
+      name: '&c&lClose Menu'
+      slot: 8
+      commandToPerform: "house closemenu"
+      lore:
+      - ' '
+
+#This GUI is the GUI shown when a user opens the rent menu
+RentGUI:
+  slots: 18 #Must be a multiple of 9
+  GUIName: "&7Extending Rental"
+  Items:
+    Item1:
+      type: WATCH
+      data: 0
+      name: '&a&l1 Day'
+      slot: 0 #Slot start at 0
+      daysToAddToRent: 1 #The number of days that this item will add to rent when purchased
+      lore:
+      - '&7Increase rent by 1 Day'
+      - '&7Cost:'
+      - '&7&e$%COST%' #Cost can still be calculated by the plugin
+      - ' '
+      - '&7Click to purchase!'
+    Item2:
+      type: WATCH
+      data: 0
+      name: '&a&l2 Days'
+      slot: 1 #Slot start at 0
+      daysToAddToRent: 2 #The number of days that this item will add to rent when purchased
+      lore:
+      - '&7Increase rent by 2 Days'
+      - '&7Cost:'
+      - '&7&e$%COST%' #Cost can still be calculated by the plugin
+      - ' '
+      - '&7Click to purchase!'
+    Item3:
+      type: WATCH
+      data: 0
+      name: '&a&l3 Days'
+      slot: 2 #Slot start at 0
+      daysToAddToRent: 3 #The number of days that this item will add to rent when purchased
+      lore:
+      - '&7Increase rent by 3 Days'
+      - '&7Cost:'
+      - '&7&e$%COST%' #Cost can still be calculated by the plugin
+      - ' '
+      - '&7Click to purchase!'
+    Item4:
+      type: WATCH
+      data: 0
+      name: '&a&l4 Days'
+      slot: 3 #Slot start at 0
+      daysToAddToRent: 4 #The number of days that this item will add to rent when purchased
+      lore:
+      - '&7Increase rent by 4 Days'
+      - '&7Cost:'
+      - '&7&e$%COST%' #Cost can still be calculated by the plugin
+      - ' '
+      - '&7Click to purchase!'
+    Item5:
+      type: WATCH
+      data: 0
+      name: '&a&l5 Days'
+      slot: 4 #Slot start at 0
+      daysToAddToRent: 5 #The number of days that this item will add to rent when purchased
+      lore:
+      - '&7Increase rent by 5 Days'
+      - '&7Cost:'
+      - '&7&e$%COST%' #Cost can still be calculated by the plugin
+      - ' '
+      - '&7Click to purchase!'
+    Item6:
+      type: WATCH
+      data: 0
+      name: '&a&l6 Days'
+      slot: 5 #Slot start at 0
+      daysToAddToRent: 6 #The number of days that this item will add to rent when purchased
+      lore:
+      - '&7Increase rent by 6 Days'
+      - '&7Cost:'
+      - '&7&e$%COST%' #Cost can still be calculated by the plugin
+      - ' '
+      - '&7Click to purchase!'
+    Item7:
+      type: WATCH
+      data: 0
+      name: '&a&l7 Days'
+      slot: 6 #Slot start at 0
+      daysToAddToRent: 7 #The number of days that this item will add to rent when purchased
+      lore:
+      - '&7Increase rent by 7 Days'
+      - '&7Cost:'
+      - '&7&e$%COST%' #Cost can still be calculated by the plugin
+      - ' '
+      - '&7Click to purchase!'
+    Item8:
+      type: WATCH
+      data: 0
+      name: '&a&l8 Days'
+      slot: 7 #Slot start at 0
+      daysToAddToRent: 8 #The number of days that this item will add to rent when purchased
+      lore:
+      - '&7Increase rent by 8 Days'
+      - '&7Cost:'
+      - '&7&e$%COST%' #Cost can still be calculated by the plugin
+      - ' '
+      - '&7Click to purchase!'
+    Item9:
+      type: WATCH
+      data: 0
+      name: '&a&l9 Days'
+      slot: 8 #Slot start at 0
+      daysToAddToRent: 9 #The number of days that this item will add to rent when purchased
+      lore:
+      - '&7Increase rent by 9 Days'
+      - '&7Cost:'
+      - '&7&e$%COST%' #Cost can still be calculated by the plugin
+      - ' '
+      - '&7Click to purchase!'
+    CloseInventoryItem:
+      type: BARRIER
+      data: 0
+      name: '&c&lClose Menu'
+      slot: 17
+      daysToAddToRent: -1 #-1 will close the inventory
+      lore:
+      - ' '

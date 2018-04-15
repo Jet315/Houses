@@ -1,9 +1,9 @@
 package me.jet315.houses.gui;
 
-import com.intellectualcrafters.plot.commands.Chat;
 import me.jet315.houses.Core;
 import me.jet315.houses.events.PlayerOpenHouseGUIEvent;
-import me.jet315.houses.utils.GUIProperties;
+import me.jet315.houses.utils.files.HouseItem;
+import me.jet315.houses.utils.files.GUIProperties;
 import me.jet315.houses.utils.Math;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,12 +13,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Jet on 07/02/2018.
  */
-public abstract class GUI{
+public abstract class GUI {
 
     private Core instance;
     private GUIProperties properties;
@@ -37,108 +37,165 @@ public abstract class GUI{
      * @param p The Player
      */
     public void openGUI(Player p) {
+
         //Create, and trigger the HouseClaimEvent so others are able to have a say in what happens
         PlayerOpenHouseGUIEvent openHouseGUIEvent = new PlayerOpenHouseGUIEvent(p);
         Core.getInstance().getServer().getPluginManager().callEvent(openHouseGUIEvent);
         //Check if event has been canceled
         if (openHouseGUIEvent.isCancelled()) return;
-
-        Inventory houseInventory = Bukkit.createInventory(null, 9, ChatColor.translateAlternateColorCodes('&', instance.getMessages().getGuiTitle()));
+        Inventory houseInventory;
 
         if (houseLevel() <= 0) {
+            houseInventory = Bukkit.createInventory(null, Core.getInstance().getProperties().getNoHouseGUISlots(),Core.getInstance().getProperties().getNoHouseGUIName());
+
             //User does not have house
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.worldtp"))
-                houseInventory.setItem(0, properties.getTeleportToHouseWorldItem());
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.playworldtp"))
+                if (properties.getItemsInNoHouseGUI().containsKey("TeleportToHouseWorldItem")) {
+                    HouseItem item = properties.getItemsInNoHouseGUI().get("TeleportToHouseWorldItem");
+                    houseInventory.setItem(item.getSlotID(),item.getItem());
+                }
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.purchasehouse"))
+                if (properties.getItemsInNoHouseGUI().containsKey("PurchaseHomeItem")) {
+                    HouseItem item = properties.getItemsInNoHouseGUI().get("PurchaseHomeItem");
+                    ItemStack itemStack = item.getItem().clone();
 
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.purchasehouse"))
-                houseInventory.setItem(1, properties.getPurchaseHome());
+                    if(itemStack.getItemMeta().getLore() != null && itemStack.getItemMeta().getLore().size() >0){
 
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.findhouse"))
-                houseInventory.setItem(2, properties.getFindHome());
+                        List<String> formattedLore = new ArrayList<>();
+                        for(String loreLine : itemStack.getItemMeta().getLore()){
+                            formattedLore.add(loreLine.replace("%COST%",String.valueOf(properties.getFirstHousePrice())));
+                        }
 
-            houseInventory.setItem(8, properties.getCloseInventory());
-        } else {
-            //User has house!
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.worldtp"))
-                houseInventory.setItem(0, properties.getTeleportToHouseWorldItem());
-
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.housetp"))
-                houseInventory.setItem(1, properties.getTeleportToHome());
-
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.findhouse"))
-                houseInventory.setItem(2, properties.getFindHome());
-
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.trust"))
-                houseInventory.setItem(3, properties.getTrustUser());
-
-
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.upgradehome")) {
-                ItemStack upgradeHome = properties.getUpgradeHome().clone();
-                ArrayList<String> lore = (ArrayList<String>) upgradeHome.getItemMeta().getLore();
-                //Check if has max house level
-                if (!(houseLevel() >= Core.getInstance().getProperties().getMaxHouseLevel())) {
-                    lore.add(ChatColor.GRAY + "This will cost you");
-                    if (properties.getEconomyTypeToUpgrade().equalsIgnoreCase("vault")) {
-                        lore.add(ChatColor.YELLOW + "$" + Math.calculateHousePrice(houseLevel(), properties.getHousePriceAlgorithm()));
-                    } else if (properties.getEconomyTypeToUpgrade().equalsIgnoreCase("tokens")) {
-                        lore.add(ChatColor.YELLOW + "" + Math.calculateHousePrice(houseLevel(), properties.getHousePriceAlgorithm()) + " Tokens!");
-                    }else if(properties.getEconomyTypeToUpgrade().equalsIgnoreCase("tokenenchant")){
-                        lore.add(ChatColor.YELLOW + "" + Math.calculateHousePrice(houseLevel(), properties.getHousePriceAlgorithm()) + " Tokens!");
-                    } else{
-                        lore.add(ChatColor.GRAY + "Nothing!");
+                        ItemMeta meta = itemStack.getItemMeta();
+                        meta.setLore(formattedLore);
+                        itemStack.setItemMeta(meta);
                     }
-                    lore.add(" ");
-                    lore.add(ChatColor.GOLD + "Alias: /house upgrade");
+                    houseInventory.setItem(item.getSlotID(),itemStack);
+                }
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.findhouse"))
+                if (properties.getItemsInNoHouseGUI().containsKey("FindHomeItem")) {
+                    HouseItem item = properties.getItemsInNoHouseGUI().get("FindHomeItem");
+                    houseInventory.setItem(item.getSlotID(),item.getItem());
+                }
+
+            if (properties.getItemsInNoHouseGUI().containsKey("CloseInventoryItem")) {
+                HouseItem item = properties.getItemsInNoHouseGUI().get("CloseInventoryItem");
+                houseInventory.setItem(item.getSlotID(),item.getItem());
+            }
+
+        } else {
+            houseInventory = Bukkit.createInventory(null, Core.getInstance().getProperties().getHouseGUISlots(),Core.getInstance().getProperties().getHouseGUIName());
+
+            //User has house!
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.worldtp"))
+                if (properties.getItemsInHouseGUI().containsKey("TeleportToHouseWorldItem")) {
+                    HouseItem item = properties.getItemsInHouseGUI().get("TeleportToHouseWorldItem");
+                    houseInventory.setItem(item.getSlotID(),item.getItem());
+
+                }
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.housetp"))
+                if (properties.getItemsInHouseGUI().containsKey("TeleportToHouseItem")) {
+                    HouseItem item = properties.getItemsInHouseGUI().get("TeleportToHouseItem");
+                    houseInventory.setItem(item.getSlotID(),item.getItem());
+
+                }
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.findhouse"))
+                if (properties.getItemsInHouseGUI().containsKey("FindHomeItem")) {
+                    HouseItem item = properties.getItemsInHouseGUI().get("FindHomeItem");
+                    houseInventory.setItem(item.getSlotID(),item.getItem());
+
+                }
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.trust"))
+                if (properties.getItemsInHouseGUI().containsKey("TrustPlayerItem")) {
+                    HouseItem item = properties.getItemsInHouseGUI().get("TrustPlayerItem");
+                    houseInventory.setItem(item.getSlotID(),item.getItem());
+
+                }
+
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.upgradehome")) {
+
+                if(!(houseLevel() >= Core.getInstance().getProperties().getMaxHouseLevel())) {
+                    //not max house level
+                    if (properties.getItemsInHouseGUI().containsKey("UpgradeHomeItem")) {
+                        HouseItem item = properties.getItemsInHouseGUI().get("UpgradeHomeItem");
+                        ItemStack itemStack = item.getItem().clone();
+                        if (itemStack.getItemMeta().getLore() != null && itemStack.getItemMeta().getLore().size() > 0) {
+                            List<String> formattedLore = new ArrayList<>();
+                            for (String loreLine : itemStack.getItemMeta().getLore()) {
+                                formattedLore.add(loreLine.replaceAll("%COST%", String.valueOf(Math.calculateHousePrice(houseLevel(), properties.getHousePriceAlgorithm()))));
+                            }
+                            ItemMeta meta = itemStack.getItemMeta();
+                            meta.setLore(formattedLore);
+                            itemStack.setItemMeta(meta);
+                        }
+
+                        houseInventory.setItem(item.getSlotID(), itemStack);
+                    }
                 }else{
-                    //Has max house level
-                    lore.add(ChatColor.RED +"Maximum House level");
-                    lore.add(ChatColor.RED +"already achieved");
-
+                    //max house level
+                    if (properties.getItemsInHouseGUI().containsKey("MaxHouseLevel")) {
+                        HouseItem item = properties.getItemsInHouseGUI().get("MaxHouseLevel");
+                        houseInventory.setItem(item.getSlotID(),item.getItem());
+                    }
                 }
 
-                //Setting the lore
-                ItemMeta upgradeMeta = upgradeHome.getItemMeta();
-                upgradeMeta.setLore(lore);
-                upgradeHome.setItemMeta(upgradeMeta);
-
-                houseInventory.setItem(4, upgradeHome);
             }
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.rent")) {
-                ItemStack rentHouse = properties.getIncreaseRent().clone();
-                ArrayList<String> lore = (ArrayList<String>) rentHouse.getItemMeta().getLore();
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.rent")) {
 
-                //Work out time left on house
-                Integer[] expiryDate = Math.calculateTimeLeft(instance.getPlayerManager().getHousePlayerMap().get(p).getMillisecondsOfExpiry());
+                if (properties.getItemsInHouseGUI().containsKey("IncreaseRentItem")) {
+                    HouseItem item = properties.getItemsInHouseGUI().get("IncreaseRentItem");
+                    ItemStack itemStack = item.getItem().clone();
 
-                lore.add(ChatColor.translateAlternateColorCodes('&', "&6" + (expiryDate[0] == 0 ? "" : (expiryDate[0] == 1 ? expiryDate[0] + " &aDay,&6 " : expiryDate[0] + " &aDays,&6 ")) +
-                        (expiryDate[1] == 1 ? expiryDate[1] + " &aHour,&6 " : expiryDate[1] + " &aHours,&6 ") +
-                        (expiryDate[2] == 1 ? expiryDate[2] + " &aMinute " : expiryDate[2] + " &aMinutes ") +
-                        (expiryDate[3] != 0 ? "&aand &6": "&6") +
-                        (expiryDate[3] == 0 ? "" : (expiryDate[3] == 1 ? expiryDate[3] + " &aSecond " : expiryDate[3] + " &aSeconds "))
-                ));
-                lore.add(" ");
-                lore.add(ChatColor.GOLD + "Alias: /house rent");
-                ItemMeta rentMeta = rentHouse.getItemMeta();
-                rentMeta.setLore(lore);
-                rentHouse.setItemMeta(rentMeta);
-                houseInventory.setItem(5,rentHouse);
+                    if (itemStack.getItemMeta().getLore() != null && itemStack.getItemMeta().getLore().size() > 0) {
+                        //Work out time left on house
+                        Integer[] expiryDate = Math.calculateTimeLeft(instance.getPlayerManager().getHousePlayerMap().get(p).getMillisecondsOfExpiry());
+                        String expiry = (ChatColor.translateAlternateColorCodes('&', "&6" + (expiryDate[0] == 0 ? "" : (expiryDate[0] == 1 ? expiryDate[0] + " &aDay,&6 " : expiryDate[0] + " &aDays,&6 ")) +
+                                (expiryDate[1] == 1 ? expiryDate[1] + " &aHour,&6 " : expiryDate[1] + " &aHours,&6 ") +
+                                (expiryDate[2] == 1 ? expiryDate[2] + " &aMinute " : expiryDate[2] + " &aMinutes ") +
+                                (expiryDate[3] != 0 ? "&aand &6" : "&6") +
+                                (expiryDate[3] == 0 ? "" : (expiryDate[3] == 1 ? expiryDate[3] + " &aSecond " : expiryDate[3] + " &aSeconds "))
+                        ));
+                        List<String> formattedLore = new ArrayList<>();
+                        for (String loreLine : itemStack.getItemMeta().getLore()) {
+                            formattedLore.add(loreLine.replaceAll("%RENTTIMELEFT%", expiry));
+                        }
+                        ItemMeta meta = itemStack.getItemMeta();
+                        meta.setLore(formattedLore);
+                        itemStack.setItemMeta(meta);
+                    }
+
+                    houseInventory.setItem(item.getSlotID(), itemStack);
+                }
+
 
             }
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.abandon"))
+                if (properties.getItemsInHouseGUI().containsKey("AbandonHome")) {
+                    HouseItem item = properties.getItemsInHouseGUI().get("AbandonHome");
+                    houseInventory.setItem(item.getSlotID(),item.getItem());
+                }
 
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.lock")) {
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.lock")) {
                 if (isHouseLocked()) {
-                    houseInventory.setItem(6, properties.getLockedHome());
+                    if (properties.getItemsInHouseGUI().containsKey("LockHomeItem")) {
+                        HouseItem item = properties.getItemsInHouseGUI().get("LockHomeItem");
+                        houseInventory.setItem(item.getSlotID(),item.getItem());
+                    }
                 } else {
-                    houseInventory.setItem(6, properties.getUnlockedHome());
+                    if (properties.getItemsInHouseGUI().containsKey("UnLockHomeItem")) {
+                        HouseItem item = properties.getItemsInHouseGUI().get("UnLockHomeItem");
+                        houseInventory.setItem(item.getSlotID(),item.getItem());
+                    }
                 }
             }
+            if (properties.getItemsInNoHouseGUI().containsKey("CloseInventoryItem")) {
+                HouseItem item = properties.getItemsInNoHouseGUI().get("CloseInventoryItem");
+                houseInventory.setItem(item.getSlotID(),item.getItem());
+            }
 
-            houseInventory.setItem(8, properties.getCloseInventory());
 
         }
         p.openInventory(houseInventory);
-
-
     }
 
     /**

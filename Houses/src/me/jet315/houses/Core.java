@@ -6,7 +6,7 @@ import me.jet315.houses.listeners.plotlisteners.PlotClaimEvent;
 import me.jet315.houses.listeners.plotlisteners.PlotEnterEvent;
 import me.jet315.houses.manager.HouseExpireTask;
 import me.jet315.houses.manager.PlayerManager;
-import me.jet315.houses.utils.GUIProperties;
+import me.jet315.houses.utils.files.GUIProperties;
 import me.jet315.houses.utils.LoadSchematics;
 import me.jet315.houses.utils.Locale;
 import me.jet315.houses.storage.SQLite;
@@ -48,7 +48,7 @@ public class Core extends JavaPlugin{
 
 
         //Loads the config & default value
-        properties = new GUIProperties(this.getConfig());
+        properties = new GUIProperties(this);
 
         //Load locale
         messages = new Locale(this,properties.getLocale());
@@ -109,7 +109,7 @@ public class Core extends JavaPlugin{
         this.properties = null;
         this.messages = null;
         this.reloadConfig();
-        this.properties = new GUIProperties(this.getConfig());
+        this.properties = new GUIProperties(this);
         this.messages = new Locale(this,properties.getLocale());
     }
     public static Core getInstance() {

@@ -38,9 +38,6 @@ DeniedSubTitle: "&cThis house is Locked!"
 #The message that is shown while a house is upgrading and a player tries to enter
 DeniedHouseUpgrading: "&e&lHouse is Upgrading... &aPlease wait!"
 
-#The title of the houses GUI
-GUITitle: "&6HOUSES &a>"
-
 #Messages shown when player performs commands - The token messages will only apply if you have either TokenManager installed and enabled, or TokenEnchant
 HouseUpgradeNoHome: "&cYou do not have a house to upgrade!"
 HouseUpgradeMaxHouse: "&aYou have the max house level already!"
@@ -84,18 +81,5 @@ HouseLockedSubTitle: "&cHouse locked!"
 HouseUnLockedSubTitle: "&aHouse unlocked!"
 HouseLockedAndNoHouseFound: "&cNo House Found!"
 
-#This is an upcoming feature - Currently not implemented. Changing any values below this line will not work
-#If you need a GUI message edited, message me on Spigot (Jet315) and I will compile you a version with this change :)
-#GUI messages
-HouseGUI:
-  slots: 9
-  Items:
-    'TeleportToHouseWorldItem':
-      type: GRASS
-      name: '&a&lHouse World'
-      lore:
-      - '&7Click to Teleport'
-      - '&7to the House World!'
-      - ' '
-      - '&6Alias: /house world'
-
+HouseAbandonNoHome: "&cYou do not have a house!"
+HouseAbandonSuccess: "&cHouse Abandoned!"

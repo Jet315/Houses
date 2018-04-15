@@ -33,6 +33,7 @@ public class CommandHandler implements org.bukkit.command.CommandExecutor {
         commands.put("find", new HouseFindCommand());
         commands.put("trust", new HouseTrustCommand());
         commands.put("untrust", new HouseUntrustCommand());
+        commands.put("abandon", new HouseAbandon());
 
         //Admin commands
         commands.put("reload", new HouseReloadCommand());

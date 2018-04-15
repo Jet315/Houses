@@ -99,12 +99,8 @@ public class Locale {
     private String houseUnLockedSubTitle = "House unlocked!";
     private String houseLockedAndNoHouseFound = "No House Found!";
 
-    /**
-     * Stores the GUI Messages
-     */
-    private String guiTitle = "HOUSE >";
-
-
+    private String houseAbandonNoHome = "&cYou do not have a house!";
+    private String houseAbandonSuccess = "House gone!";
 
 
     //Constructor
@@ -199,8 +195,6 @@ public class Locale {
         deniedSubTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("DeniedSubTitle"));
         houseUpgrading = ChatColor.translateAlternateColorCodes('&',locale.getString("DeniedHouseUpgrading"));
 
-        guiTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("GUITitle"));
-
         houseUpgradeNoHome = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUpgradeNoHome"));
         houseUpgradeMaxHouse = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUpgradeMaxHouse"));
         houseUpgradeInProcess = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUpgradeInProcess"));
@@ -244,6 +238,10 @@ public class Locale {
         houseUnLockedSubTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUnLockedSubTitle"));
         houseLockedAndNoHouseFound = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseLockedAndNoHouseFound"));
 
+        houseAbandonNoHome = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseAbandonNoHome"));
+        houseAbandonSuccess = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseAbandonSuccess"));
+
+
     }
 
     public String getNoPermissionMessage() {
@@ -256,10 +254,6 @@ public class Locale {
 
     public String getDeniedSubTitle() {
         return deniedSubTitle;
-    }
-
-    public String getGuiTitle() {
-        return guiTitle;
     }
 
     public String getHouseExpireMessage() {
@@ -451,5 +445,13 @@ public class Locale {
 
     public String getHouseRentExtended() {
         return houseRentExtended;
+    }
+
+    public String getHouseAbandonNoHome() {
+        return houseAbandonNoHome;
+    }
+
+    public String getHouseAbandonSuccess() {
+        return houseAbandonSuccess;
     }
 }

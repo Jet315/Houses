@@ -2,7 +2,7 @@ package me.jet315.houses.listeners;
 
 import me.jet315.houses.Core;
 import me.jet315.houses.utils.Locale;
-import me.jet315.houses.utils.Properties;
+import me.jet315.houses.utils.files.Properties;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
