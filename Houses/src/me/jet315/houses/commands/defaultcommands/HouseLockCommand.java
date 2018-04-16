@@ -63,7 +63,11 @@ public class HouseLockCommand extends CommandExecutor {
 
                 Core.getInstance().getDb().setHouseLocked(p.getUniqueId().toString(),false);
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseUnlocked()));
-                p.sendTitle(locale.getHouseLockingTitle(),locale.getHouseUnLockedSubTitle(),30,60,10);
+                if(Core.serverVersion.startsWith("v1_12")) {
+                    p.sendTitle(locale.getHouseLockingTitle(), locale.getHouseUnLockedSubTitle(), 30, 60, 10);
+                }else{
+                    p.sendTitle(locale.getHouseLockingTitle(), locale.getHouseUnLockedSubTitle());
+                    }
             }else{
                 //house WAS unlocked, so lock it
                 for(PlotPlayer playerInPlot : plot.getPlayersInPlot()){
@@ -74,8 +78,11 @@ public class HouseLockCommand extends CommandExecutor {
                 }
 
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseLocked()));
+                if(Core.serverVersion.startsWith("v1_12")) {
                 p.sendTitle(locale.getHouseLockingTitle(),locale.getHouseLockedSubTitle(),30,60,10);
-
+                }else{
+                    p.sendTitle(locale.getHouseLockingTitle(), locale.getHouseLockedSubTitle());
+                }
                 Core.getInstance().getPlayerManager().getHousePlayerMap().get(p).setIsHouseLocked(true);
 
                 Core.getInstance().getDb().setHouseLocked(p.getUniqueId().toString(),true);

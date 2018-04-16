@@ -209,7 +209,5 @@ public class Core extends JavaPlugin{
     }
 
 
-    /**
-     * When clicking on GUI elements check if max house/has perm
-     */
+
 }

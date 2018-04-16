@@ -3,8 +3,10 @@ package me.jet315.houses.listeners;
 import me.jet315.houses.Core;
 import me.jet315.houses.utils.Locale;
 import me.jet315.houses.utils.files.Properties;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -25,6 +27,7 @@ public class MineEvent implements Listener{
     public void onMine(BlockBreakEvent e){
         //They are in the plots world
         if(e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase(properties.getPlotsWorldName())) {
+
             if (e.getBlock().getLocation().getBlockY() >= properties.getGetMaxBuildHeight()) {
 
                 if (e.getPlayer().hasPermission("house.admin.build")) return;

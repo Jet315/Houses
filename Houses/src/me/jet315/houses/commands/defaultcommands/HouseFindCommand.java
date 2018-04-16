@@ -12,6 +12,7 @@ import me.jet315.houses.utils.Locale;
 import me.jet315.houses.utils.UnclaimReason;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -42,18 +43,29 @@ public class HouseFindCommand extends CommandExecutor {
         Player p = (Player) sender;
         Locale locale = Core.getInstance().getMessages();
         Set<Plot> plots;
+        OfflinePlayer target;
+        if(Bukkit.getPlayer(args[1]) != null){
+            target = Bukkit.getPlayer(args[1]);
+        }else{
+            target= Bukkit.getOfflinePlayer(args[1]);
+
+        }
         try {
-            plots = PS.get().getPlots(Core.getInstance().getProperties().getPlotsWorldName(), args[1]);
-        }catch (Exception ex){
-            p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseFindNoPlayer().replaceAll("%PLAYER%",args[1])));
+            plots = PlotPlayer.wrap(target).getPlots();//target could be null
+        }catch (Exception ex) {
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseFindNoPlayer().replaceAll("%PLAYER%", args[1])));
+
             return;
         }
         if(plots.size() > 0){
+
             Plot plot = plots.iterator().next();
+
             //Create, and trigger the HouseClaimEvent so others are able to have a say in what happens
             TeleportToHouseEvent houseTeleportEvent = new TeleportToHouseEvent(p,plot);
             Core.getInstance().getServer().getPluginManager().callEvent(houseTeleportEvent);
             if(houseTeleportEvent.isCancelled()) return;
+
             PlotPlayer.get(p.getName()).teleport(plot.getDefaultHome());
             p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseFindTP()));
             return;

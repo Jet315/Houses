@@ -53,10 +53,12 @@ public class HouseUpgradeCommand extends CommandExecutor {
         PlotPlayer plotPlayer = PlotPlayer.get(p.getName());
         Locale locale = Core.getInstance().getMessages();
         //Check if user has a valid house to upgradehouse
-        if (!(Core.getInstance().getPlayerManager().getHousePlayerMap().containsKey(p) && plotPlayer.getPlots().size() > 0)) {
+        if (!(Core.getInstance().getPlayerManager().getHousePlayerMap().containsKey(p) && plotPlayer.getPlots(Core.getInstance().getProperties().getPlotsWorldName()).size() > 0)) {
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseUpgradeNoHome()));
             return;
         }
+
+
         int currentHouseLevel = Core.getInstance().getPlayerManager().getHousePlayerMap().get(p).getHouseLevel();
 
         /**
@@ -79,7 +81,7 @@ public class HouseUpgradeCommand extends CommandExecutor {
         //Get the price of the house, check user has the funds
         int housePriceUpgrade = Math.calculateHousePrice(currentHouseLevel, Core.getInstance().getProperties().getHousePriceAlgorithm());
         if (housePriceUpgrade <= 0) {
-            upgradeHouse(p, plotPlayer.getPlots().iterator().next());
+            upgradeHouse(p, plotPlayer.getPlots(Core.getInstance().getProperties().getPlotsWorldName()).iterator().next());
             return;
         }
 
@@ -96,7 +98,7 @@ public class HouseUpgradeCommand extends CommandExecutor {
             //Check player has the funds, if so withdraw them
             if (Core.economy.getBalance(p) >= housePriceUpgrade) {
                 Core.economy.withdrawPlayer(p, housePriceUpgrade);
-                upgradeHouse(p, plotPlayer.getPlots().iterator().next());
+                upgradeHouse(p, plotPlayer.getPlots(Core.getInstance().getProperties().getPlotsWorldName()).iterator().next());
             } else {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseUpgradeNotEnoughMoney().replaceAll("%PRICE%",String.valueOf(housePriceUpgrade))));
             }
@@ -114,7 +116,7 @@ public class HouseUpgradeCommand extends CommandExecutor {
             //Check player has the tokens, if so take them away
             if (TMAPI.getTokens(p) >= housePriceUpgrade) {
                 TMAPI.removeTokens(p, housePriceUpgrade);
-                upgradeHouse(p, plotPlayer.getPlots().iterator().next());
+                upgradeHouse(p, plotPlayer.getPlots(Core.getInstance().getProperties().getPlotsWorldName()).iterator().next());
             } else {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseUpgradeNotEnoughTokens().replaceAll("%PRICE%",String.valueOf(housePriceUpgrade))));
             }
@@ -128,14 +130,13 @@ public class HouseUpgradeCommand extends CommandExecutor {
         //Check player has the tokens, if so take them away
         if(TokenEnchantAPI.getInstance().getTokens(p) >= housePriceUpgrade){
             TokenEnchantAPI.getInstance().removeTokens(p,housePriceUpgrade);
-            upgradeHouse(p, plotPlayer.getPlots().iterator().next());
+            upgradeHouse(p, plotPlayer.getPlots(Core.getInstance().getProperties().getPlotsWorldName()).iterator().next());
         }else{
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseUpgradeNotEnoughTokens().replaceAll("%PRICE%",String.valueOf(housePriceUpgrade))));}
 
     }else {
         p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + "&cAn Economy type for house upgrading cannot be identified. Please contact the server owner."));
     }
-
 
 
     }
