@@ -1,9 +1,13 @@
 package me.jet315.houses.commands.defaultcommands;
 
+import com.intellectualcrafters.plot.PS;
 import com.intellectualcrafters.plot.api.PlotAPI;
 import com.intellectualcrafters.plot.commands.Chat;
 import com.intellectualcrafters.plot.object.Plot;
+import com.intellectualcrafters.plot.object.PlotArea;
+import com.intellectualcrafters.plot.object.PlotId;
 import com.intellectualcrafters.plot.object.PlotPlayer;
+import com.intellectualcrafters.plot.util.EconHandler;
 import com.vk2gpz.tokenenchant.api.TokenEnchantAPI;
 import me.jet315.houses.Core;
 import me.jet315.houses.commands.CommandExecutor;
@@ -52,7 +56,7 @@ public class HousePurchaseCommand extends CommandExecutor {
         //Get the price of the house, check user has the funds
         int housePrice = Core.getInstance().getProperties().getFirstHousePrice();
         if(housePrice <= 0){
-            claimHouse(p);
+            claimHouse(p,plotPlayer);
             return;
         }
 
@@ -68,7 +72,7 @@ public class HousePurchaseCommand extends CommandExecutor {
             //Check player has the funds, if so withdraw them
             if(Core.economy.getBalance(p) >= housePrice){
                 Core.economy.withdrawPlayer(p,housePrice);
-                claimHouse(p);
+                claimHouse(p,plotPlayer);
             }else{
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHousePurchaseNotEnoughMoney().replaceAll("%PRICE%",String.valueOf(housePrice))));
             }
@@ -86,7 +90,7 @@ public class HousePurchaseCommand extends CommandExecutor {
             //Check player has the tokens, if so take them away
             if(TMAPI.getTokens(p) >= housePrice){
                 TMAPI.removeTokens(p,housePrice);
-                claimHouse(p);
+                claimHouse(p,plotPlayer);
             }else{
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHousePurchaseNotEnoughTokens().replaceAll("%PRICE%",String.valueOf(housePrice))));
             }
@@ -103,7 +107,7 @@ public class HousePurchaseCommand extends CommandExecutor {
             //Check player has the tokens, if so take them away
             if(TokenEnchantAPI.getInstance().getTokens(p) >= housePrice){
                 TokenEnchantAPI.getInstance().removeTokens(p,housePrice);
-                claimHouse(p);
+                claimHouse(p,plotPlayer);
             }else{
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHousePurchaseNotEnoughTokens().replaceAll("%PRICE%",String.valueOf(housePrice))));
             }
@@ -118,7 +122,7 @@ public class HousePurchaseCommand extends CommandExecutor {
      * Called when user has paid and needs a house
      * @param p The player who is involved
      */
-    public void claimHouse(Player p){
+    public void claimHouse(Player p,PlotPlayer plotPlayer){
         //Teleport player to the plot world, wait a second, run the plot claim command
 
         //The House Claim Event is called when the plot is created, so no need to call it here. Possibly need to move it here though
@@ -145,7 +149,26 @@ public class HousePurchaseCommand extends CommandExecutor {
                     refundHouse(p,Core.getInstance().getProperties().getFirstHousePrice());
                     return;
                 }else {
-                    p.performCommand("p auto");
+                    PlotArea plotArea = plotPlayer.getApplicablePlotArea();
+                        if (plotArea == null) {
+                            if (EconHandler.manager != null) {
+                                for (PlotArea area : PS.get().getPlotAreaManager().getAllPlotAreas()) {
+                                    if (plotArea != null) {
+                                        plotArea = null;
+                                        break;
+                                    }
+                                    plotArea = area;
+
+                                }
+                            }
+                        }
+                        if (plotArea.TYPE == 2) {
+                            p.sendMessage(Core.getInstance().getProperties().getPluginPrefix() + ChatColor.RED + "No free plots!");
+                            return;
+                        }
+
+                        Plot plot = plotArea.getNextFreePlot(plotPlayer, PlotId.fromString(plotArea.id));
+                        plot.claim(plotPlayer,true,null,true);
 
                 }
             }

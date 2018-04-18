@@ -4,6 +4,7 @@ package me.jet315.houses.commands.defaultcommands;
 import com.intellectualcrafters.plot.api.PlotAPI;
 import com.intellectualcrafters.plot.commands.Chat;
 import com.intellectualcrafters.plot.object.Plot;
+import com.intellectualcrafters.plot.object.PlotManager;
 import com.intellectualcrafters.plot.object.PlotPlayer;
 import me.jet315.houses.Core;
 import me.jet315.houses.commands.CommandExecutor;
@@ -40,6 +41,7 @@ public class HouseLockCommand extends CommandExecutor {
         //Can cast as was already checked
         Player p = (Player) sender;
         PlotPlayer plotPlayer = PlotPlayer.get(p.getName());
+
         Locale locale = Core.getInstance().getMessages();
         //Check if user has a house
         if(Core.getInstance().getPlayerManager().getHousePlayerMap().containsKey(p) && plotPlayer.getPlots().size() > 0){

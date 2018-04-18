@@ -28,7 +28,7 @@ public class HouseUntrustCommand extends CommandExecutor {
     public HouseUntrustCommand() {
         setCommand("untrust");
         setPermission("house.player.untrust");
-        setLength(1);
+        setLength(2);
         setPlayer();
         setUsage("/house untrust <player>");
 

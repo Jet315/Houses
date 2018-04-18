@@ -209,5 +209,9 @@ public class Core extends JavaPlugin{
     }
 
 
-
+    /**
+     * Updated
+     * /locate command
+     * Errors if typing /house find, /house trust, /house untrust with no parameter
+     */
 }

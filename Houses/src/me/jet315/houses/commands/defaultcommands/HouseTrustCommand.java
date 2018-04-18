@@ -26,7 +26,7 @@ public class HouseTrustCommand extends CommandExecutor {
     public HouseTrustCommand() {
         setCommand("trust");
         setPermission("house.player.trust");
-        setLength(1);
+        setLength(2);
         setPlayer();
         setUsage("/house trust <player>");
 

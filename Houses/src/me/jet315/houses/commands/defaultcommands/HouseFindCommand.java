@@ -30,7 +30,7 @@ public class HouseFindCommand extends CommandExecutor {
     public HouseFindCommand() {
         setCommand("find");
         setPermission("house.player.find");
-        setLength(1);
+        setLength(2);
         setPlayer();
         setUsage("/house find <player>");
 

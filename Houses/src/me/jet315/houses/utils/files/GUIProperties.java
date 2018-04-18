@@ -77,7 +77,6 @@ public class GUIProperties extends Properties{
          */
         for (String itemName : super.getGuiConfig().getConfigurationSection("NoHouseGUI.Items").getKeys(false)) {
             try {
-
                 String path = "NoHouseGUI.Items." + itemName;
 
                 Material material = Material.valueOf(super.getGuiConfig().getString(path + ".type"));
