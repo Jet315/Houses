@@ -18,7 +18,7 @@ public class PlotClaimEvent implements Listener{
 
     @EventHandler
     public void onClaimEvent(PlayerClaimPlotEvent e){
-        //Create, and trigger the HouseClaimEvent so others are able to have a say in what happens
+        //Create, and trigger the HouseClaimCommand so others are able to have a say in what happens
         HouseClaimEvent houseClaimEvent = new HouseClaimEvent(e.getPlayer(),e.getPlot());
         Core.getInstance().getServer().getPluginManager().callEvent(houseClaimEvent);
 

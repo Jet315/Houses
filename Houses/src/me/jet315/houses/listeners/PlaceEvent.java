@@ -14,29 +14,23 @@ import org.bukkit.event.block.BlockPlaceEvent;
  */
 public class PlaceEvent  implements Listener {
 
-    /**
-     * Stores the Properties object (Saves typing & looks more neat)
-     */
-    private Properties properties = Core.getInstance().getProperties();
-    private Locale locale = Core.getInstance().getMessages();
-
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e){
 
-        if(e.getBlockPlaced().getLocation().getWorld().getName().equalsIgnoreCase(properties.getPlotsWorldName())){
-            if(e.getBlockPlaced().getLocation().getBlockY() >= properties.getGetMaxBuildHeight()){
+        if(e.getBlockPlaced().getLocation().getWorld().getName().equalsIgnoreCase(Core.getInstance().getProperties().getPlotsWorldName())){
+            if(e.getBlockPlaced().getLocation().getBlockY() >= Core.getInstance().getProperties().getGetMaxBuildHeight()){
                 if(e.getPlayer().hasPermission("house.admin.build")) return;
                 //If block being placed is a sign and the properties allow it
-                if((e.getBlockPlaced().getType() == Material.SIGN_POST || e.getBlockPlaced().getType() == Material.WALL_SIGN) && properties.isAllowSignsInHouse()){
+                if((e.getBlockPlaced().getType() == Material.SIGN_POST || e.getBlockPlaced().getType() == Material.WALL_SIGN) && Core.getInstance().getProperties().isAllowSignsInHouse()){
                     if(e.getBlockAgainst().getType() == Material.CHEST){
                         return;
                     }else{
                         e.setCancelled(true);
-                        e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',properties.getPluginPrefix() + locale.getSignNotOnChest()));
+                        e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getSignNotOnChest()));
                     }
                 }else{
                     e.setCancelled(true);
-                    e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',properties.getPluginPrefix() + locale.getBlockBrokenInHouse()));
+                    e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getBlockBrokenInHouse()));
                 }
             }
         }

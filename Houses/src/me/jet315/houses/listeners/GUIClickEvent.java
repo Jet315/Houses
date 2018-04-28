@@ -6,7 +6,6 @@ import me.jet315.houses.utils.files.HouseItem;
 import me.jet315.houses.utils.files.GUIProperties;
 import me.jet315.houses.utils.Locale;
 import me.jet315.houses.utils.files.RentItem;
-import me.realized.tm.api.TMAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -240,8 +239,8 @@ public class GUIClickEvent implements Listener {
                             return;
                         }
                         //Check player has the tokens, if so take them away
-                        if (TMAPI.getTokens(p) >= rentPrice) {
-                            TMAPI.removeTokens(p, rentPrice);
+                        if (Core.tokenManager.getTokens(p) != null && Core.tokenManager.getTokens(p).getAsLong() >= rentPrice) {
+                            Core.tokenManager.setTokens(p, Core.tokenManager.getTokens(p).getAsLong() - rentPrice);
                             addRent(p, rentItem.getRentDays());
                             closeAndUpdateInventory(p);
                         } else {
