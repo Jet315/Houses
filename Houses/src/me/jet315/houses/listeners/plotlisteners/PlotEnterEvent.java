@@ -2,6 +2,7 @@ package me.jet315.houses.listeners.plotlisteners;
 
 import com.intellectualcrafters.plot.object.Location;
 import com.intellectualcrafters.plot.object.Plot;
+import com.intellectualcrafters.plot.object.PlotPlayer;
 import com.plotsquared.bukkit.events.PlayerEnterPlotEvent;
 import me.jet315.houses.Core;
 import me.jet315.houses.events.HouseEnterEvent;
@@ -165,5 +166,17 @@ public class PlotEnterEvent implements Listener{
                 p.playSound(p.getLocation(), Sound.BLOCK_WOODEN_DOOR_CLOSE, 1, 1);
             }
         }
+        ensurePlayerIsKickedOutOfPlot(plot,p,plotMiddle);
+    }
+
+    public void ensurePlayerIsKickedOutOfPlot(Plot plot, Player p, org.bukkit.Location middle){
+        Bukkit.getScheduler().runTaskLater(Core.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                if(plot.getPlayersInPlot().contains(PlotPlayer.get(p.getName()))){
+                    p.setVelocity(p.getLocation().toVector().subtract(middle.toVector()).divide(new Vector(8,0,8)).setY(0.5));
+                }
+            }
+        },10L);
     }
 }
