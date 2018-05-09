@@ -1,8 +1,6 @@
 package me.jet315.houses.commands.defaultcommands;
 
 import com.intellectualcrafters.plot.PS;
-import com.intellectualcrafters.plot.api.PlotAPI;
-import com.intellectualcrafters.plot.commands.Chat;
 import com.intellectualcrafters.plot.object.Plot;
 import com.intellectualcrafters.plot.object.PlotArea;
 import com.intellectualcrafters.plot.object.PlotId;
@@ -11,10 +9,7 @@ import com.intellectualcrafters.plot.util.EconHandler;
 import com.vk2gpz.tokenenchant.api.TokenEnchantAPI;
 import me.jet315.houses.Core;
 import me.jet315.houses.commands.CommandExecutor;
-import me.jet315.houses.events.HouseClaimEvent;
-import me.jet315.houses.events.HouseLockEvent;
 import me.jet315.houses.utils.Locale;
-import me.realized.tm.api.TMAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -88,8 +83,8 @@ public class HousePurchaseCommand extends CommandExecutor {
                 return;
             }
             //Check player has the tokens, if so take them away
-            if(TMAPI.getTokens(p) >= housePrice){
-                TMAPI.removeTokens(p,housePrice);
+            if(Core.tokenManager.getTokens(p) != null && Core.tokenManager.getTokens(p).getAsLong() >= housePrice){
+                Core.tokenManager.setTokens(p, Core.tokenManager.getTokens(p).getAsLong() - housePrice);
                 claimHouse(p,plotPlayer);
             }else{
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHousePurchaseNotEnoughTokens().replaceAll("%PRICE%",String.valueOf(housePrice))));
@@ -191,7 +186,7 @@ public class HousePurchaseCommand extends CommandExecutor {
              */
         }else if(Core.getInstance().getProperties().getEconomyTypeToUpgrade().equalsIgnoreCase("tokens")){
 
-            TMAPI.addTokens(p,Core.getInstance().getProperties().getFirstHousePrice());
+            Core.tokenManager.setTokens(p,Core.tokenManager.getTokens(p).getAsLong() + Core.getInstance().getProperties().getFirstHousePrice());
             System.out.println(ChatColor.YELLOW + "USER " + p.getName() + " Has been refunded " + amount + " Tokens");
 
         }else if(Core.getInstance().getProperties().getEconomyTypeToUpgrade().equalsIgnoreCase("tokenenchant")){

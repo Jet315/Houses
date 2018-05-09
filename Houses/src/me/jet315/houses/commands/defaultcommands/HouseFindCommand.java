@@ -61,7 +61,7 @@ public class HouseFindCommand extends CommandExecutor {
 
             Plot plot = plots.iterator().next();
 
-            //Create, and trigger the HouseClaimEvent so others are able to have a say in what happens
+            //Create, and trigger the HouseClaimCommand so others are able to have a say in what happens
             TeleportToHouseEvent houseTeleportEvent = new TeleportToHouseEvent(p,plot);
             Core.getInstance().getServer().getPluginManager().callEvent(houseTeleportEvent);
             if(houseTeleportEvent.isCancelled()) return;

@@ -4,7 +4,6 @@ import com.intellectualcrafters.plot.object.PlotPlayer;
 import me.jet315.houses.Core;
 import me.jet315.houses.commands.CommandExecutor;
 import me.jet315.houses.utils.Locale;
-import me.realized.tm.api.TMAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;

@@ -10,12 +10,10 @@ import me.jet315.houses.commands.CommandExecutor;
 import me.jet315.houses.events.HouseUpgradeEvent;
 import me.jet315.houses.utils.Locale;
 import me.jet315.houses.utils.Math;
-import me.realized.tm.api.TMAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.command.CommandSender;
@@ -26,7 +24,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Jet on 09/02/2018.
@@ -114,8 +111,8 @@ public class HouseUpgradeCommand extends CommandExecutor {
                 return;
             }
             //Check player has the tokens, if so take them away
-            if (TMAPI.getTokens(p) >= housePriceUpgrade) {
-                TMAPI.removeTokens(p, housePriceUpgrade);
+            if (Core.tokenManager.getTokens(p) != null && Core.tokenManager.getTokens(p).getAsLong() >= housePriceUpgrade) {
+                Core.tokenManager.setTokens(p, Core.tokenManager.getTokens(p).getAsLong() - housePriceUpgrade);
                 upgradeHouse(p, plotPlayer.getPlots().iterator().next());
             } else {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseUpgradeNotEnoughTokens().replaceAll("%PRICE%",String.valueOf(housePriceUpgrade))));
