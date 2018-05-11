@@ -1,11 +1,11 @@
 package me.jet315.houses.commands;
 
 import me.jet315.houses.Core;
-import me.jet315.houses.commands.admincommands.HouseEvictPlayer;
+import me.jet315.houses.commands.admincommands.AddRentCommand;
+import me.jet315.houses.commands.admincommands.HouseEvictPlayerCommand;
 import me.jet315.houses.commands.admincommands.HouseReloadCommand;
 import me.jet315.houses.commands.defaultcommands.*;
 import me.jet315.houses.gui.PlayersGUI;
-import net.minecraft.server.v1_12_R1.EntityCow;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -39,7 +39,8 @@ public class CommandHandler implements org.bukkit.command.CommandExecutor {
 
         //Admin commands
         commands.put("reload", new HouseReloadCommand());
-        commands.put("delete", new HouseEvictPlayer());
+        commands.put("delete", new HouseEvictPlayerCommand());
+        commands.put("addrent", new AddRentCommand());
     }
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
 
