@@ -182,7 +182,9 @@ public class GUIClickEvent implements Listener {
         /**
          * Increase rental GUI
          */
+
         if (e.getClickedInventory().getName().equals(Core.getInstance().getProperties().getRentGUIName())) {
+
             e.setCancelled(true);
 
             Player p = (Player) e.getWhoClicked();

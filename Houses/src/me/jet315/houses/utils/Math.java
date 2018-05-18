@@ -32,6 +32,32 @@ public class Math {
         }
     }
 
+/*
+    public static int calculateHousePrice(int levelHouse, String a)
+    {
+        switch (levelHouse)
+        {
+            case 1:
+                return 250;
+            case 2:
+                return 600;
+            case 3:
+                return 1200;
+            case 4:
+                return 2500;
+            case 5:
+                return 6000;
+            case 6:
+                return 10000;
+            case 7:
+                return 18000;
+            case 8:
+                return 18000;
+        }
+        return 18000;
+    }
+*/
+
     /**
      *
      * @param millisecondsOfExpiry - The expiry time, measured from Epoch, of when the house expires

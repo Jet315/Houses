@@ -158,7 +158,7 @@ public class GUIProperties extends Properties{
         rentGUIName = ChatColor.translateAlternateColorCodes('&',super.getGuiConfig().getString("RentGUI.GUIName"));
         rentGUISlots = super.getGuiConfig().getInt("RentGUI.slots");
 
-        increaseRentInventory = Bukkit.createInventory(null,rentGUISlots,ChatColor.GRAY + "Extending Rental");
+        increaseRentInventory = Bukkit.createInventory(null,rentGUISlots,rentGUIName);
 
         int pricePerDay = super.getCostToRentPerDay();
 

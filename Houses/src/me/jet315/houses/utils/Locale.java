@@ -102,6 +102,9 @@ public class Locale {
     private String houseAbandonNoHome = "&cYou do not have a house!";
     private String houseAbandonSuccess = "House gone!";
 
+    private String trustListNoHome = "&cNo home";
+    private String trustListFormat = "Players:";
+    private String trustListNoPlayers = "No players on the plot";
 
     //Constructor
     public Locale(Core instance, String localeName){
@@ -241,6 +244,17 @@ public class Locale {
         houseAbandonNoHome = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseAbandonNoHome"));
         houseAbandonSuccess = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseAbandonSuccess"));
 
+        try{
+            trustListNoHome = ChatColor.translateAlternateColorCodes('&',locale.getString("TrustListNoHome"));
+            trustListFormat = ChatColor.translateAlternateColorCodes('&',locale.getString("TrustListFormat"));
+            trustListNoPlayers = ChatColor.translateAlternateColorCodes('&',locale.getString("TrustListNoPlayers"));
+        }catch (Exception e){
+            System.out.println(ChatColor.RED + "[HOUSES] WARNING");
+            System.out.println(ChatColor.RED + "The locale configuration file has not been updated correctly (Missing values: TrustListNoHome, TrustListFormat,TrustListNoPlayers) - See recent updates & how to update");
+            trustListNoHome =  ChatColor.translateAlternateColorCodes('&',"&cYou do not have a home!");
+            trustListFormat =  ChatColor.translateAlternateColorCodes('&',"&6Players trusted to your home:\n&e%TRUSTLIST%");
+            trustListNoPlayers =  ChatColor.translateAlternateColorCodes('&',"&cNo trusted players on the plot!");
+        }
 
     }
 
@@ -453,5 +467,17 @@ public class Locale {
 
     public String getHouseAbandonSuccess() {
         return houseAbandonSuccess;
+    }
+
+    public String getTrustListNoHome() {
+        return trustListNoHome;
+    }
+
+    public String getTrustListFormat() {
+        return trustListFormat;
+    }
+
+    public String getTrustListNoPlayers() {
+        return trustListNoPlayers;
     }
 }
