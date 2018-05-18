@@ -87,11 +87,10 @@ public class HouseExpireTask {
                         Set<Plot> plots = PS.get().getPlots(housePlayer.getPlayer().getUniqueId());
                         if (plots.size() > 0) {
                             Plot plot = plots.iterator().next();
-                            //Create, and trigger the HouseClaimEvent so others are able to have a say in what happens
+                            //Create, and trigger the HouseClaimCommand so others are able to have a say in what happens
                             HouseUnclaimEvent houseUnclaimEvent = new HouseUnclaimEvent(housePlayer.getPlayer(), plot, UnclaimReason.TIME_EXPIRY);
                             Core.getInstance().getServer().getPluginManager().callEvent(houseUnclaimEvent);
                             plot.deletePlot(null);
-
                             Core.getInstance().getDb().deleteRecord(housePlayer.getPlayer().getUniqueId().toString());
                             housePlayer.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + "&f&lYour house has been deleted as you did not pay rent"));
                         }
