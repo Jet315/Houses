@@ -50,7 +50,6 @@ public class PlaceHolderRequest extends PlaceholderExpansion {
             return String.valueOf(expiryDate[2]);
         }
 
-
         if(s.equalsIgnoreCase("seconds_left")){
             if(!Core.getInstance().getPlayerManager().getHousePlayerMap().containsKey(player)) return "0";
             Integer[] expiryDate = Math.calculateTimeLeft(Core.getInstance().getPlayerManager().getHousePlayerMap().get(player).getMillisecondsOfExpiry());
@@ -63,6 +62,14 @@ public class PlaceHolderRequest extends PlaceholderExpansion {
         if(s.equalsIgnoreCase("lock_status")){
             if(!Core.getInstance().getPlayerManager().getHousePlayerMap().containsKey(player)) return "false";
             return String.valueOf(Core.getInstance().getPlayerManager().getHousePlayerMap().get(player).getIsHouseLocked());
+        }
+
+        if(s.equalsIgnoreCase("next_upgrade_price")){
+            if(!Core.getInstance().getPlayerManager().getHousePlayerMap().containsKey(player)) return Core.getInstance().getMessages().getNextHousePricePlaceHolder().replaceAll("%NEXTHOUSEPRICE%",String.valueOf(Core.getInstance().getProperties().getFirstHousePrice()));
+            int houseLevel = Core.getInstance().getPlayerManager().getHousePlayerMap().get(player).getHouseLevel();
+            if(houseLevel == Core.getInstance().getProperties().getMaxHouseLevel()) return Core.getInstance().getMessages().getNextHousePricePlaceHolder();
+            return Core.getInstance().getMessages().getNextHousePricePlaceHolder().replaceAll("%NEXTHOUSEPRICE%",String.valueOf(Math.calculateHousePrice(houseLevel,Core.getInstance().getProperties().getHousePriceAlgorithm())));
+
         }
 
         return null;

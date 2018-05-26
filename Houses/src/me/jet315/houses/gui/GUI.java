@@ -38,7 +38,7 @@ public abstract class GUI {
      */
     public void openGUI(Player p) {
 
-        //Create, and trigger the HouseClaimEvent so others are able to have a say in what happens
+        //Create, and trigger the HouseClaimCommand so others are able to have a say in what happens
         PlayerOpenHouseGUIEvent openHouseGUIEvent = new PlayerOpenHouseGUIEvent(p);
         Core.getInstance().getServer().getPluginManager().callEvent(openHouseGUIEvent);
         //Check if event has been canceled
@@ -49,12 +49,12 @@ public abstract class GUI {
             houseInventory = Bukkit.createInventory(null, Core.getInstance().getProperties().getNoHouseGUISlots(),Core.getInstance().getProperties().getNoHouseGUIName());
 
             //User does not have house
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.playworldtp"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.world"))
                 if (properties.getItemsInNoHouseGUI().containsKey("TeleportToHouseWorldItem")) {
                     HouseItem item = properties.getItemsInNoHouseGUI().get("TeleportToHouseWorldItem");
                     houseInventory.setItem(item.getSlotID(),item.getItem());
                 }
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.purchasehouse"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.purchase"))
                 if (properties.getItemsInNoHouseGUI().containsKey("PurchaseHomeItem")) {
                     HouseItem item = properties.getItemsInNoHouseGUI().get("PurchaseHomeItem");
                     ItemStack itemStack = item.getItem().clone();
@@ -72,7 +72,7 @@ public abstract class GUI {
                     }
                     houseInventory.setItem(item.getSlotID(),itemStack);
                 }
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.findhouse"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.find"))
                 if (properties.getItemsInNoHouseGUI().containsKey("FindHomeItem")) {
                     HouseItem item = properties.getItemsInNoHouseGUI().get("FindHomeItem");
                     houseInventory.setItem(item.getSlotID(),item.getItem());
@@ -87,19 +87,19 @@ public abstract class GUI {
             houseInventory = Bukkit.createInventory(null, Core.getInstance().getProperties().getHouseGUISlots(),Core.getInstance().getProperties().getHouseGUIName());
 
             //User has house!
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.worldtp"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.world"))
                 if (properties.getItemsInHouseGUI().containsKey("TeleportToHouseWorldItem")) {
                     HouseItem item = properties.getItemsInHouseGUI().get("TeleportToHouseWorldItem");
                     houseInventory.setItem(item.getSlotID(),item.getItem());
 
                 }
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.housetp"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.tp"))
                 if (properties.getItemsInHouseGUI().containsKey("TeleportToHouseItem")) {
                     HouseItem item = properties.getItemsInHouseGUI().get("TeleportToHouseItem");
                     houseInventory.setItem(item.getSlotID(),item.getItem());
 
                 }
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.findhouse"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.find"))
                 if (properties.getItemsInHouseGUI().containsKey("FindHomeItem")) {
                     HouseItem item = properties.getItemsInHouseGUI().get("FindHomeItem");
                     houseInventory.setItem(item.getSlotID(),item.getItem());
@@ -112,7 +112,7 @@ public abstract class GUI {
 
                 }
 
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.upgradehome")) {
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.upgrade")) {
 
                 if(!(houseLevel() >= Core.getInstance().getProperties().getMaxHouseLevel())) {
                     //not max house level

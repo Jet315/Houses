@@ -1,9 +1,9 @@
 name: Houses
-version: 1.0
+version: 2.6
 description: Combines Plots + Houses to create an amazing combination!
 main: me.jet315.houses.Core
 depend: [PlotSquared]
-softdepend: [TokenManager,Vault,TokenEnchant]
+softdepend: [TokenManager,Vault,TokenEnchant,PlaceholderAPI]
 commands:
   house:
     description: The base command for the House's plugin

@@ -37,6 +37,7 @@ public class AddRentCommand extends CommandExecutor {
             return;
         }
         int days;
+
         try {
             days = Integer.valueOf(args[2]);
         }catch (NumberFormatException e) {

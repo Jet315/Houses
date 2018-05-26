@@ -11,6 +11,7 @@ import me.jet315.houses.utils.LoadSchematics;
 import me.jet315.houses.utils.Locale;
 import me.jet315.houses.storage.SQLite;
 import me.jet315.houses.storage.Database;
+import me.realized.tokenmanager.api.TokenManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -39,6 +40,7 @@ public class Core extends JavaPlugin{
     private boolean isTokenManagerEnabled = false;
 
     private boolean isTokenEnchantEnabled = false;
+    public static TokenManager tokenManager;
 
     public void onEnable(){
         //Just cool knowing how long the plugin takes to enable
@@ -77,6 +79,12 @@ public class Core extends JavaPlugin{
         //Database
         this.db = new SQLite(this,properties.getSqliteTable());
         this.db.load();
+
+        //Placeholders
+        if( Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")){
+            //Registering placeholder will be use here
+            new PlaceHolderRequest().register();
+        }
         
         System.out.println("[Houses] Initializing Complete - Time took " + String.valueOf(System.currentTimeMillis()-startTime) +"Ms\n");
 
@@ -147,6 +155,7 @@ public class Core extends JavaPlugin{
         //Possible Dependencies
         if(Bukkit.getPluginManager().isPluginEnabled("TokenManager")){
             isTokenManagerEnabled = true;
+            tokenManager = (TokenManager) Bukkit.getPluginManager().getPlugin("TokenManager");
         }else{
             if(properties.getEconomyTypeToUpgrade().equalsIgnoreCase("tokens") || properties.getEconomyTypeForRenting().equalsIgnoreCase("tokens")){
                 System.out.println(ChatColor.RED + "[HOUSES ERROR NOTICE] You have Tokens as an economy type enabled yet TokenManager is not installed!");

@@ -83,3 +83,11 @@ HouseLockedAndNoHouseFound: "&cNo House Found!"
 
 HouseAbandonNoHome: "&cYou do not have a house!"
 HouseAbandonSuccess: "&cHouse Abandoned!"
+
+TrustListNoHome: "&cYou do not have a home!"
+TrustListNoPlayers: "&cThere are no players trusted!"
+TrustListFormat: "&6Players trusted to your home:\n%TRUSTLIST%" #The plugins prefix will not show on this message
+
+#PlaceHolderOptions for the %houses_next_upgrade_price% placeholder
+MaxHousePricePlaceHolder: "Max House level!"
+NextHousePricePlaceholder: "$%NEXTHOUSEPRICE%"

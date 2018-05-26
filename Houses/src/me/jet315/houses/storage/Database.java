@@ -56,7 +56,7 @@ public abstract class Database {
                         Set<Plot> plots = PS.get().getPlots(uuid);
                         if(plots.size() > 0){
                             Plot plot = plots.iterator().next();
-                            //Create, and trigger the HouseClaimEvent so others are able to have a say in what happens
+                            //Create, and trigger the HouseClaimCommand so others are able to have a say in what happens
                             HouseUnclaimEvent houseUnclaimEvent = new HouseUnclaimEvent(Bukkit.getOfflinePlayer(uuid),plot, UnclaimReason.TIME_EXPIRY);
                             Core.getInstance().getServer().getPluginManager().callEvent(houseUnclaimEvent);
                             plot.deletePlot(null);
@@ -108,7 +108,7 @@ public abstract class Database {
                                     Set<Plot> plots = PS.get().getPlots(uuid);
                                     if(plots.size() > 0){
                                         Plot plot = plots.iterator().next();
-                                        //Create, and trigger the HouseClaimEvent so others are able to have a say in what happens
+                                        //Create, and trigger the HouseClaimCommand so others are able to have a say in what happens
                                         HouseUnclaimEvent houseUnclaimEvent = new HouseUnclaimEvent(p,plot, UnclaimReason.TIME_EXPIRY);
                                         Core.getInstance().getServer().getPluginManager().callEvent(houseUnclaimEvent);
                                         plot.deletePlot(null);

@@ -50,7 +50,7 @@ public class Locale {
      * Stores the sub title messages for when a user enters a denied plot
      */
     private String deniedTitle = "Houses";
-    private String deniedSubTitle ="This House is Locked!";
+    private String deniedSubTitle = "This House is Locked!";
     private String houseUpgrading = "This house is upgrading";
     /**
      * House Commands
@@ -72,7 +72,7 @@ public class Locale {
     private String houseTrustNoHome = "You do not have a house to trust people to!";
     private String houseTrustYourself = "You cannot Trust yourself to your own house!";
     private String houseTrustNotOnline = "The player '%PLAYER%' is not online!";
-    private String houseTrustAlreadyTrusted =  "This player is already trusted! &aType /house untrust %PLAYER% to untrust the player.";
+    private String houseTrustAlreadyTrusted = "This player is already trusted! &aType /house untrust %PLAYER% to untrust the player.";
     private String houseTrustSuccess = "This player is now trusted on your home!";
 
     private String houseFindNoPlayer = "A house for player '%PLAYER%' cannot be found!";
@@ -81,7 +81,7 @@ public class Locale {
     private String houseWorldTPAlreadyInWorld = "You are already in the House World!";
     private String houseWorldTP = "Teleporting!";
 
-    private String playerHasNoHouse =  "You do not have a house!";
+    private String playerHasNoHouse = "You do not have a house!";
 
     private String houseRentalNoHouse = "You do not have a house to increase rent on!";
     private String houseRentExtended = "Increased the rent!";
@@ -106,8 +106,12 @@ public class Locale {
     private String trustListFormat = "Players:";
     private String trustListNoPlayers = "No players on the plot";
 
+    //Placeholders
+    private String maxHousePricePlaceHolder = "Max house level!";
+    private String nextHousePricePlaceHolder = "$%NEXTHOUSEPRICE%";
+
     //Constructor
-    public Locale(Core instance, String localeName){
+    public Locale(Core instance, String localeName) {
         this.plugin = instance;
         this.localeName = localeName;
         reloadLocale(localeName);
@@ -128,10 +132,10 @@ public class Locale {
         }
 
         if (localeFile == null) {
-            InputStream in = plugin.getResource("locale/"+localeName +".yml");
+            InputStream in = plugin.getResource("locale/" + localeName + ".yml");
 
             localeFile = new File(localeDir.getPath(), localeName + ".yml");
-            File outFile = new File(localeDir, localeName +".yml");
+            File outFile = new File(localeDir, localeName + ".yml");
             try {
                 if (!outFile.exists()) {
                     OutputStream out = new FileOutputStream(outFile);
@@ -144,24 +148,23 @@ public class Locale {
                     in.close();
                 }
             } catch (IOException e) {
-                System.out.println("Failed to create File " + localeName +" (Incorrect Locale specified?) - This will cause an error.");
+                System.out.println("Failed to create File " + localeName + " (Incorrect Locale specified?) - This will cause an error.");
                 localeFile.delete();
-            }catch (NullPointerException e){
-                System.out.println("Failed to create File " + localeName +" (Incorrect Locale specified?) - This will cause an error.");
+            } catch (NullPointerException e) {
+                System.out.println("Failed to create File " + localeName + " (Incorrect Locale specified?) - This will cause an error.");
                 localeFile.delete();
             }
         }
 
         if (localeFile.exists()) {
             //File may have created, but may not contain anything
-            if(localeFile.length() == 0){
-                System.out.println("Failed to create File " + localeName +" (Incorrect Locale specified?) - This will cause an error.");
+            if (localeFile.length() == 0) {
+                System.out.println("Failed to create File " + localeName + " (Incorrect Locale specified?) - This will cause an error.");
                 localeFile.delete();
-            }else {
+            } else {
 
                 locale = YamlConfiguration.loadConfiguration(localeFile);
             }
-
 
 
         } else {
@@ -171,90 +174,94 @@ public class Locale {
                 localeFile = new File(plugin.getDataFolder() + File.separator + "locale", localeName + ".yml");
                 locale = YamlConfiguration.loadConfiguration(localeFile);
             } else {
-                System.out.println("Failed to create File " + localeName +" (Incorrect Locale specified? The file must exist within the /locale file) - This will cause errors :(.");
+                System.out.println("Failed to create File " + localeName + " (Incorrect Locale specified? The file must exist within the /locale file) - This will cause errors :(.");
             }
         }
     }
+
     /**
      * Loads the properties in the locale file to variables
      */
-    public void loadLocale(){
-        noPermissionMessage = ChatColor.translateAlternateColorCodes('&',locale.getString("NoPermission"));
-        houseExpireMessage = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseRemainingTime"));
-        houseExpired = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseExpired"));
-        blockBrokenInHouse = ChatColor.translateAlternateColorCodes('&',locale.getString("BlockBrokenInHouse"));
-        signNotOnChest = ChatColor.translateAlternateColorCodes('&',locale.getString("SignNotOnChest"));
-        housePurchaseConfirmation = ChatColor.translateAlternateColorCodes('&',locale.getString("HousePurchaseConfirmation"));
-        houseUpgradeConfirmation = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUpgradeConfirmation"));
-        houseTrustMessage = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseTrustMessage"));
-        houseFindMessage = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseFindMessage"));
-        houseRentalLimit = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseRentalLimit"));
-        noFundsEconomyRental = ChatColor.translateAlternateColorCodes('&',locale.getString("NoFundsEconomyRental"));
-        noFundsTokensRental = ChatColor.translateAlternateColorCodes('&',locale.getString("NoFundsTokensRental"));
-        commandCanceled = ChatColor.translateAlternateColorCodes('&',locale.getString("CommandCanceled"));
-        nonExistentPlotCommand = ChatColor.translateAlternateColorCodes('&',locale.getString("NonExistentPlotCommand"));
+    public void loadLocale() {
+        noPermissionMessage = ChatColor.translateAlternateColorCodes('&', locale.getString("NoPermission"));
+        houseExpireMessage = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseRemainingTime"));
+        houseExpired = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseExpired"));
+        blockBrokenInHouse = ChatColor.translateAlternateColorCodes('&', locale.getString("BlockBrokenInHouse"));
+        signNotOnChest = ChatColor.translateAlternateColorCodes('&', locale.getString("SignNotOnChest"));
+        housePurchaseConfirmation = ChatColor.translateAlternateColorCodes('&', locale.getString("HousePurchaseConfirmation"));
+        houseUpgradeConfirmation = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUpgradeConfirmation"));
+        houseTrustMessage = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseTrustMessage"));
+        houseFindMessage = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseFindMessage"));
+        houseRentalLimit = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseRentalLimit"));
+        noFundsEconomyRental = ChatColor.translateAlternateColorCodes('&', locale.getString("NoFundsEconomyRental"));
+        noFundsTokensRental = ChatColor.translateAlternateColorCodes('&', locale.getString("NoFundsTokensRental"));
+        commandCanceled = ChatColor.translateAlternateColorCodes('&', locale.getString("CommandCanceled"));
+        nonExistentPlotCommand = ChatColor.translateAlternateColorCodes('&', locale.getString("NonExistentPlotCommand"));
 
-        deniedTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("DeniedTitle"));
-        deniedSubTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("DeniedSubTitle"));
-        houseUpgrading = ChatColor.translateAlternateColorCodes('&',locale.getString("DeniedHouseUpgrading"));
+        deniedTitle = ChatColor.translateAlternateColorCodes('&', locale.getString("DeniedTitle"));
+        deniedSubTitle = ChatColor.translateAlternateColorCodes('&', locale.getString("DeniedSubTitle"));
+        houseUpgrading = ChatColor.translateAlternateColorCodes('&', locale.getString("DeniedHouseUpgrading"));
 
-        houseUpgradeNoHome = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUpgradeNoHome"));
-        houseUpgradeMaxHouse = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUpgradeMaxHouse"));
-        houseUpgradeInProcess = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUpgradeInProcess"));
-        houseUpgradeNotEnoughMoney = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUpgradeNotEnoughMoney"));
-        houseUpgradeNotEnoughTokens = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUpgradeNotEnoughTokens"));
+        houseUpgradeNoHome = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUpgradeNoHome"));
+        houseUpgradeMaxHouse = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUpgradeMaxHouse"));
+        houseUpgradeInProcess = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUpgradeInProcess"));
+        houseUpgradeNotEnoughMoney = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUpgradeNotEnoughMoney"));
+        houseUpgradeNotEnoughTokens = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUpgradeNotEnoughTokens"));
 
-        houseUntrustNoHome = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUntrustNoHome"));
-        houseUntrustYourself = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUntrustYourself"));
-        houseUntrustNeverPlayedBefore = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUntrustNeverPlayedBefore"));
-        houseUntrustNotTrusted = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUntrustNotTrusted"));
-        houseUntrustSuccess = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUntrustSuccess"));
-        houseUntrustError = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUntrustError"));
+        houseUntrustNoHome = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUntrustNoHome"));
+        houseUntrustYourself = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUntrustYourself"));
+        houseUntrustNeverPlayedBefore = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUntrustNeverPlayedBefore"));
+        houseUntrustNotTrusted = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUntrustNotTrusted"));
+        houseUntrustSuccess = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUntrustSuccess"));
+        houseUntrustError = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUntrustError"));
 
-        houseTrustNoHome = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseTrustNoHome"));
-        houseTrustYourself = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseTrustYourself"));
-        houseTrustNotOnline = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseTrustNotOnline"));
-        houseTrustAlreadyTrusted = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseTrustAlreadyTrusted"));
-        houseTrustSuccess = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseTrustSuccess"));
+        houseTrustNoHome = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseTrustNoHome"));
+        houseTrustYourself = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseTrustYourself"));
+        houseTrustNotOnline = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseTrustNotOnline"));
+        houseTrustAlreadyTrusted = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseTrustAlreadyTrusted"));
+        houseTrustSuccess = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseTrustSuccess"));
 
-        houseFindNoPlayer = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseFindNoPlayer"));
-        houseFindTP = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseFindTP"));
+        houseFindNoPlayer = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseFindNoPlayer"));
+        houseFindTP = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseFindTP"));
 
-        houseWorldTPAlreadyInWorld = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseWorldTPAlreadyInWorld"));
-        houseWorldTP = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseWorldTP"));
+        houseWorldTPAlreadyInWorld = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseWorldTPAlreadyInWorld"));
+        houseWorldTP = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseWorldTP"));
 
-        playerHasNoHouse = ChatColor.translateAlternateColorCodes('&',locale.getString("PlayerHasNoHouse"));
+        playerHasNoHouse = ChatColor.translateAlternateColorCodes('&', locale.getString("PlayerHasNoHouse"));
 
-        houseRentalNoHouse = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseRentalNoHouse"));
-        houseRentExtended = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseRentExtended"));
+        houseRentalNoHouse = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseRentalNoHouse"));
+        houseRentExtended = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseRentExtended"));
 
-        housePurchaseAlreadyHasHouse = ChatColor.translateAlternateColorCodes('&',locale.getString("HousePurchaseAlreadyHasHouse"));
-        housePurchaseNotEnoughMoney = ChatColor.translateAlternateColorCodes('&',locale.getString("HousePurchaseNotEnoughMoney"));
-        housePurchaseNotEnoughTokens = ChatColor.translateAlternateColorCodes('&',locale.getString("HousePurchaseNotEnoughTokens"));
-        housePurchaseFail = ChatColor.translateAlternateColorCodes('&',locale.getString("HousePurchaseFail"));
+        housePurchaseAlreadyHasHouse = ChatColor.translateAlternateColorCodes('&', locale.getString("HousePurchaseAlreadyHasHouse"));
+        housePurchaseNotEnoughMoney = ChatColor.translateAlternateColorCodes('&', locale.getString("HousePurchaseNotEnoughMoney"));
+        housePurchaseNotEnoughTokens = ChatColor.translateAlternateColorCodes('&', locale.getString("HousePurchaseNotEnoughTokens"));
+        housePurchaseFail = ChatColor.translateAlternateColorCodes('&', locale.getString("HousePurchaseFail"));
 
-        houseLocked = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseLocked"));
-        houseLockedMessageToVisitors = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseLockedMessageToVisitors"));
-        houseUnlocked = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUnlocked"));
-        houseLockingTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseLockingTitle"));
-        houseLockedSubTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseLockedSubTitle"));
-        houseUnLockedSubTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUnLockedSubTitle"));
-        houseLockedAndNoHouseFound = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseLockedAndNoHouseFound"));
+        houseLocked = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseLocked"));
+        houseLockedMessageToVisitors = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseLockedMessageToVisitors"));
+        houseUnlocked = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUnlocked"));
+        houseLockingTitle = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseLockingTitle"));
+        houseLockedSubTitle = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseLockedSubTitle"));
+        houseUnLockedSubTitle = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseUnLockedSubTitle"));
+        houseLockedAndNoHouseFound = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseLockedAndNoHouseFound"));
 
-        houseAbandonNoHome = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseAbandonNoHome"));
-        houseAbandonSuccess = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseAbandonSuccess"));
+        houseAbandonNoHome = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseAbandonNoHome"));
+        houseAbandonSuccess = ChatColor.translateAlternateColorCodes('&', locale.getString("HouseAbandonSuccess"));
 
-        try{
-            trustListNoHome = ChatColor.translateAlternateColorCodes('&',locale.getString("TrustListNoHome"));
-            trustListFormat = ChatColor.translateAlternateColorCodes('&',locale.getString("TrustListFormat"));
-            trustListNoPlayers = ChatColor.translateAlternateColorCodes('&',locale.getString("TrustListNoPlayers"));
-        }catch (Exception e){
+        trustListNoHome = ChatColor.translateAlternateColorCodes('&', locale.getString("TrustListNoHome"));
+        trustListFormat = ChatColor.translateAlternateColorCodes('&', locale.getString("TrustListFormat"));
+        trustListNoPlayers = ChatColor.translateAlternateColorCodes('&', locale.getString("TrustListNoPlayers"));
+
+
+        try {
+            maxHousePricePlaceHolder = ChatColor.translateAlternateColorCodes('&', locale.getString("MaxHousePricePlaceHolder"));
+            nextHousePricePlaceHolder = ChatColor.translateAlternateColorCodes('&', locale.getString("NextHousePricePlaceholder"));
+
+        } catch (Exception e) {
             System.out.println(ChatColor.RED + "[HOUSES] WARNING");
-            System.out.println(ChatColor.RED + "The locale configuration file has not been updated correctly (Missing values: TrustListNoHome, TrustListFormat,TrustListNoPlayers) - See recent updates & how to update");
-            trustListNoHome =  ChatColor.translateAlternateColorCodes('&',"&cYou do not have a home!");
-            trustListFormat =  ChatColor.translateAlternateColorCodes('&',"&6Players trusted to your home:\n&e%TRUSTLIST%");
-            trustListNoPlayers =  ChatColor.translateAlternateColorCodes('&',"&cNo trusted players on the plot!");
+            System.out.println(ChatColor.RED + "The locale configuration file has not been updated correctly (Missing values: MaxPricePlaceHolder, NextHousePricePlaceholder) - See recent updates & how to update");
         }
+
 
     }
 
@@ -321,6 +328,7 @@ public class Locale {
     public String getHouseUpgradeNoHome() {
         return houseUpgradeNoHome;
     }
+
     public String getHouseUpgradeMaxHouse() {
         return houseUpgradeMaxHouse;
     }
@@ -479,5 +487,15 @@ public class Locale {
 
     public String getTrustListNoPlayers() {
         return trustListNoPlayers;
+    }
+
+
+
+    public String getNextHousePricePlaceHolder() {
+        return nextHousePricePlaceHolder;
+    }
+
+    public String getMaxHousePricePlaceHolder() {
+        return maxHousePricePlaceHolder;
     }
 }
