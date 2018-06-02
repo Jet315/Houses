@@ -57,7 +57,7 @@ public class PlotEnterEvent implements Listener{
         if(p.getUniqueId().toString().equals(plotOwnersUUID)) return;
 
         /**
-         * Check to see if person enetering plot is trusted, if so return
+         * Check to see if person entering plot is trusted, if so return
          */
         for(UUID trustedUUIDs : e.getPlot().getTrusted()){
             if(trustedUUIDs.equals(p.getUniqueId())) return;
@@ -146,11 +146,7 @@ public class PlotEnterEvent implements Listener{
     }
 
     public void blockPlayerFromEnteringPlot(Plot plot, Player p){
-        if(Core.serverVersion.startsWith("v1_12")) {
-            p.sendTitle(Core.getInstance().getMessages().getDeniedTitle(), Core.getInstance().getMessages().getDeniedSubTitle(), 30, 60, 30);
-        }else{
-            p.sendTitle(Core.getInstance().getMessages().getDeniedTitle(), Core.getInstance().getMessages().getDeniedSubTitle());
-        }
+
         //e.getPlot().addDenied(p.getUniqueId());
         Location plotLoc = plot.getCenter();
         org.bukkit.Location plotMiddle = new org.bukkit.Location(Bukkit.getWorld(plotLoc.getWorld()),plotLoc.getX(),plotLoc.getY(),plotLoc.getZ());

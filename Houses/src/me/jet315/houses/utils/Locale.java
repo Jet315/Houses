@@ -106,6 +106,10 @@ public class Locale {
     private String trustListFormat = "Players:";
     private String trustListNoPlayers = "No players on the plot";
 
+    private String purchasedTitle = "none";
+    private String purchaseSubTitle = "none";
+
+
     //Placeholders
     private String maxHousePricePlaceHolder = "Max house level!";
     private String nextHousePricePlaceHolder = "$%NEXTHOUSEPRICE%";
@@ -252,14 +256,16 @@ public class Locale {
         trustListFormat = ChatColor.translateAlternateColorCodes('&', locale.getString("TrustListFormat"));
         trustListNoPlayers = ChatColor.translateAlternateColorCodes('&', locale.getString("TrustListNoPlayers"));
 
+        maxHousePricePlaceHolder = ChatColor.translateAlternateColorCodes('&', locale.getString("MaxHousePricePlaceHolder"));
+        nextHousePricePlaceHolder = ChatColor.translateAlternateColorCodes('&', locale.getString("NextHousePricePlaceholder"));
+
 
         try {
-            maxHousePricePlaceHolder = ChatColor.translateAlternateColorCodes('&', locale.getString("MaxHousePricePlaceHolder"));
-            nextHousePricePlaceHolder = ChatColor.translateAlternateColorCodes('&', locale.getString("NextHousePricePlaceholder"));
-
+            purchasedTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("PurchasedTitle"));
+            purchaseSubTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("PurchasedSubTitle"));
         } catch (Exception e) {
             System.out.println(ChatColor.RED + "[HOUSES] WARNING");
-            System.out.println(ChatColor.RED + "The locale configuration file has not been updated correctly (Missing values: MaxPricePlaceHolder, NextHousePricePlaceholder) - See recent updates & how to update");
+            System.out.println(ChatColor.RED + "The locale configuration file has not been updated correctly (missing version 2.7 update notes) See recent updates & how to update");
         }
 
 
@@ -497,5 +503,13 @@ public class Locale {
 
     public String getMaxHousePricePlaceHolder() {
         return maxHousePricePlaceHolder;
+    }
+
+    public String getPurchaseSubTitle() {
+        return purchaseSubTitle;
+    }
+
+    public String getPurchasedTitle() {
+        return purchasedTitle;
     }
 }

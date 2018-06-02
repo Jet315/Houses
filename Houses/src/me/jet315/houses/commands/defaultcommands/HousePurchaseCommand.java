@@ -164,6 +164,12 @@ public class HousePurchaseCommand extends CommandExecutor {
 
                         Plot plot = plotArea.getNextFreePlot(plotPlayer, PlotId.fromString(plotArea.id));
                         plot.claim(plotPlayer,true,null,true);
+                        Locale locale = Core.getInstance().getMessages();
+                    if(Core.serverVersion.startsWith("v1_12")) {
+                        p.sendTitle(locale.getPurchasedTitle().equalsIgnoreCase("none") ? "": locale.getPurchaseSubTitle(),locale.getPurchaseSubTitle().equalsIgnoreCase("none") ? "": locale.getPurchaseSubTitle(),30,60,10);
+                    }else{
+                        p.sendTitle(locale.getPurchasedTitle().equalsIgnoreCase("none") ? "": locale.getPurchaseSubTitle(),locale.getPurchaseSubTitle().equalsIgnoreCase("none") ? "": locale.getPurchaseSubTitle());
+                    }
 
                 }
             }
