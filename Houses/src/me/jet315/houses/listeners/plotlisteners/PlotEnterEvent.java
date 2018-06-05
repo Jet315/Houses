@@ -8,6 +8,7 @@ import me.jet315.houses.Core;
 import me.jet315.houses.events.HouseEnterEvent;
 import me.jet315.houses.events.HouseUpgradeEvent;
 import me.jet315.houses.manager.HousePlayer;
+import me.jet315.houses.utils.Locale;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -162,6 +163,15 @@ public class PlotEnterEvent implements Listener{
                 p.playSound(p.getLocation(), Sound.BLOCK_WOODEN_DOOR_CLOSE, 1, 1);
             }
         }
+
+        //Title
+        Locale locale = Core.getInstance().getMessages();
+        if(Core.serverVersion.startsWith("v1_12")) {
+            p.sendTitle(locale.getDeniedTitle().equalsIgnoreCase("none") ? "": locale.getDeniedTitle(),locale.getDeniedSubTitle().equalsIgnoreCase("none") ? "": locale.getDeniedSubTitle(),30,60,10);
+        }else{
+            p.sendTitle(locale.getDeniedTitle().equalsIgnoreCase("none") ? "": locale.getDeniedTitle(),locale.getDeniedSubTitle().equalsIgnoreCase("none") ? "": locale.getDeniedSubTitle());
+        }
+
         ensurePlayerIsKickedOutOfPlot(plot,p,plotMiddle);
     }
 
