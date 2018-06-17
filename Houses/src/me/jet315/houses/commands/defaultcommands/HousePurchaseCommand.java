@@ -166,9 +166,9 @@ public class HousePurchaseCommand extends CommandExecutor {
                         plot.claim(plotPlayer,true,null,true);
                         Locale locale = Core.getInstance().getMessages();
                     if(Core.serverVersion.startsWith("v1_12")) {
-                        p.sendTitle(locale.getPurchasedTitle().equalsIgnoreCase("none") ? "": locale.getPurchaseSubTitle(),locale.getPurchaseSubTitle().equalsIgnoreCase("none") ? "": locale.getPurchaseSubTitle(),30,60,10);
+                        p.sendTitle(locale.getPurchasedTitle().equalsIgnoreCase("none") ? "": locale.getPurchasedTitle(),locale.getPurchaseSubTitle().equalsIgnoreCase("none") ? "": locale.getPurchaseSubTitle(),30,60,10);
                     }else{
-                        p.sendTitle(locale.getPurchasedTitle().equalsIgnoreCase("none") ? "": locale.getPurchaseSubTitle(),locale.getPurchaseSubTitle().equalsIgnoreCase("none") ? "": locale.getPurchaseSubTitle());
+                        p.sendTitle(locale.getPurchasedTitle().equalsIgnoreCase("none") ? "": locale.getPurchasedTitle(),locale.getPurchaseSubTitle().equalsIgnoreCase("none") ? "": locale.getPurchaseSubTitle());
                     }
 
                 }

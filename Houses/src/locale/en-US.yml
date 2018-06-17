@@ -38,6 +38,15 @@ DeniedSubTitle: "&cThis house is Locked!"
 #The message that is shown while a house is upgrading and a player tries to enter
 DeniedHouseUpgrading: "&e&lHouse is Upgrading... &aPlease wait!"
 
+#The title that is displayed when a user purchases (claims) a house (set to none if you do not wish a title to show)
+PurchasedTitle: "&6HOUSES"
+PurchasedSubTitle: "&aPurchase Complete!"
+
+#If a player has to wait a certain amount of seconds before teleporting, this is the message that is sent
+#Use %SECONDS% to replace the time needed to wait
+TimeToWait: "&cPlease wait still for &a%SECONDS%!"
+PlayerMovedWhileTryingToTeleport: "&cYou moved, teleporting canceled!"
+
 #Messages shown when player performs commands - The token messages will only apply if you have either TokenManager installed and enabled, or TokenEnchant
 HouseUpgradeNoHome: "&cYou do not have a house to upgrade!"
 HouseUpgradeMaxHouse: "&aYou have the max house level already!"

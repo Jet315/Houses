@@ -57,7 +57,7 @@ DeleteExpiredHousesOnStartup: true
 
 #Max House Level (This will prevent people from clicking 'upgrade' past this level)
 MaxHouseLevel: 6
-#How far above ground level would you like to search for players chests when a house is upgraded? When using the default schematics - This number is fine. (This is so items can be transfered when a house is upgraded)
+#How far above ground level (MaxBuildHeight) would you like to search for players chests when a house is upgraded? When using the default schematics - This number is fine. (This is so items can be transfered when a house is upgraded)
 ChestSearchLevel: 30
 
 #Commands to block - This blocks the basic /plot commands from running
@@ -72,6 +72,9 @@ CommandsToBlock:
   - "/2"
   - "/plotme"
   - "/plots"
+
+#This delay is the time (in seconds) a player has to wait before being able to teleport (0 = instant teleport, with no message)
+TimeToWaitWhenTeleporting: 0
 
 #If this is enabled, when a plot is claimed the first schematic will be pasted onto the plot and have the above vectors applied to it.
 #If you want the plot world to pre generate the first level houses, follow this tutorial: https://github.com/IntellectualSites/PlotSquared/wiki/Installation#initial-setup and disable this option

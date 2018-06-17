@@ -28,6 +28,7 @@ public class PlotEnterEvent implements Listener{
 
     @EventHandler
     public void onPlayerPlotEnter(PlayerEnterPlotEvent e) {
+
         //Create, and trigger the HouseEnterEvent so others are able to have a say in what happens
         HouseEnterEvent houseEnterEvent = new HouseEnterEvent(e.getPlayer(),e.getPlot());
         Core.getInstance().getServer().getPluginManager().callEvent(houseEnterEvent);
@@ -55,7 +56,8 @@ public class PlotEnterEvent implements Listener{
         /**
          * Check to see person entering plot is plot owner, if so return
          */
-        if(p.getUniqueId().toString().equals(plotOwnersUUID)) return;
+
+        if(p.getUniqueId().toString().equalsIgnoreCase(plotOwnersUUID)) return;
 
         /**
          * Check to see if person entering plot is trusted, if so return
@@ -76,6 +78,7 @@ public class PlotEnterEvent implements Listener{
         if(plotPlayer != null){
             //Check to see if locked
             if(Core.getInstance().getPlayerManager().getHousePlayerMap().get(plotPlayer).getIsHouseLocked()) {
+
                 //House is locked, add to block list then return
                 blockPlayerFromEnteringPlot(e.getPlot(), p);
             }
@@ -94,6 +97,7 @@ public class PlotEnterEvent implements Listener{
         };
         //Execute the future
         Future<Boolean> future = executorService.submit(task);
+
         //Async task to wait for Future to return
         Bukkit.getScheduler().runTaskAsynchronously(Core.getInstance(), new Runnable() {
             @Override
@@ -110,6 +114,7 @@ public class PlotEnterEvent implements Listener{
 
                 //An error has occurred pretty much if this happens
                 if(counter == 20){
+
                     future.cancel(true);
                     return;
                 }
@@ -118,6 +123,7 @@ public class PlotEnterEvent implements Listener{
                     boolean houseLocked = future.get();
                     //If house is not locked, return, players are allowed to enter
                     if(!houseLocked){
+
                         return;
                     }
                     //House is locked, kick players out - This must be Synchronised
@@ -127,6 +133,7 @@ public class PlotEnterEvent implements Listener{
                     Bukkit.getScheduler().runTask(Core.getInstance(),new Runnable(){
                         @Override
                         public void run() {
+
                             blockPlayerFromEnteringPlot(e.getPlot(),p);
                         }
                     });

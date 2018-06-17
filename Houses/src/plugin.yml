@@ -1,5 +1,5 @@
 name: Houses
-version: 2.6
+version: 2.8
 description: Combines Plots + Houses to create an amazing combination!
 main: me.jet315.houses.Core
 depend: [PlotSquared]

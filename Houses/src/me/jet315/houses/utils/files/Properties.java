@@ -79,7 +79,7 @@ public abstract class Properties extends DataFiles{
 
     private boolean deleteExpiredHousesOnStartup = true;
 
-
+    private int timeToWaitWhenTeleporting =  0;
     /**
      * Stores imformation about the schematics
      */
@@ -143,6 +143,7 @@ public abstract class Properties extends DataFiles{
          */
         commandsToBlock = super.getConfig().getStringList("CommandsToBlock");
 
+        timeToWaitWhenTeleporting = super.getConfig().getInt("TimeToWaitWhenTeleporting");
         /**
          * Schematic values
          */
@@ -155,6 +156,7 @@ public abstract class Properties extends DataFiles{
         moveExpirySchematicXDirection = super.getConfig().getInt("MoveExpirySchematicXDirection");
         moveExpirySchematicYDirection = super.getConfig().getInt("MoveExpirySchematicYDirection");
         moveExpirySchematicZDirection = super.getConfig().getInt("MoveExpirySchematicZDirection");
+
 
     }
 
@@ -281,5 +283,9 @@ public abstract class Properties extends DataFiles{
 
     public int getMoveExpirySchematicZDirection() {
         return moveExpirySchematicZDirection;
+    }
+
+    public int gettimeToWaitWhenTeleporting() {
+        return timeToWaitWhenTeleporting;
     }
 }

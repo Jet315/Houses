@@ -114,6 +114,9 @@ public class Locale {
     private String maxHousePricePlaceHolder = "Max house level!";
     private String nextHousePricePlaceHolder = "$%NEXTHOUSEPRICE%";
 
+    private String timeToWait = "please wait";
+    private String playerMovedWhileTryingToTeleport = "you moved";
+
     //Constructor
     public Locale(Core instance, String localeName) {
         this.plugin = instance;
@@ -259,14 +262,17 @@ public class Locale {
         maxHousePricePlaceHolder = ChatColor.translateAlternateColorCodes('&', locale.getString("MaxHousePricePlaceHolder"));
         nextHousePricePlaceHolder = ChatColor.translateAlternateColorCodes('&', locale.getString("NextHousePricePlaceholder"));
 
+        purchasedTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("PurchasedTitle"));
+        purchaseSubTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("PurchasedSubTitle"));
 
         try {
-            purchasedTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("PurchasedTitle"));
-            purchaseSubTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("PurchasedSubTitle"));
+            timeToWait = ChatColor.translateAlternateColorCodes('&',locale.getString("TimeToWait"));
+            playerMovedWhileTryingToTeleport = ChatColor.translateAlternateColorCodes('&',locale.getString("PlayerMovedWhileTryingToTeleport"));
         } catch (Exception e) {
             System.out.println(ChatColor.RED + "[HOUSES] WARNING");
-            System.out.println(ChatColor.RED + "The locale configuration file has not been updated correctly (missing version 2.7 update notes) See recent updates & how to update");
+            System.out.println(ChatColor.RED + "The locale configuration file has not been updated correctly (missing version 2.8 update notes) See recent updates & how to update");
         }
+
 
 
     }
@@ -511,5 +517,13 @@ public class Locale {
 
     public String getPurchasedTitle() {
         return purchasedTitle;
+    }
+
+    public String getTimeToWait() {
+        return timeToWait;
+    }
+
+    public String getPlayerMovedWhileTryingToTeleport() {
+        return playerMovedWhileTryingToTeleport;
     }
 }

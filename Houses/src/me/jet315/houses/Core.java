@@ -74,8 +74,9 @@ public class Core extends JavaPlugin{
         registerDependencies();
 
         //House expire task
-        new HouseExpireTask(instance,playerManager);
-
+        if(properties.isShouldHousesExpire()) {
+            new HouseExpireTask(instance, playerManager);
+        }
         //Database
         this.db = new SQLite(this,properties.getSqliteTable());
         this.db.load();

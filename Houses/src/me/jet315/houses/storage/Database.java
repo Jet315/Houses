@@ -45,7 +45,7 @@ public abstract class Database {
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + table);
             ResultSet rs = ps.executeQuery();
-            if(plugin.getProperties().getDeleteExpiredHousesOnStartup()) {
+            if(plugin.getProperties().getDeleteExpiredHousesOnStartup() && plugin.getProperties().isShouldHousesExpire()) {
                 long currentMilliseconds = System.currentTimeMillis();
                 ArrayList<UUID> uuids = new ArrayList<>();
                 while (rs.next()) {
@@ -100,7 +100,7 @@ public abstract class Database {
                     while (rs.next()) {
                         long milisecondTillExpire = rs.getLong("milliseconds_of_expire");
                         //Plot has expired, delete plot
-                        if(milisecondTillExpire < System.currentTimeMillis()){
+                        if(milisecondTillExpire < System.currentTimeMillis() && Core.getInstance().getProperties().isShouldHousesExpire()){
                             Bukkit.getScheduler().runTask(Core.getInstance(),new Runnable(){
                                 @Override
                                 public void run() {
