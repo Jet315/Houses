@@ -53,7 +53,7 @@ MaxAmountOfRentTime: 28
 #The amount of rent time given to a user when he/she claims a house (In days, integers only)
 GivenRentTime: 7
 #Would you like to delete expired houses on startup? Will increase starting loading times depending on how big database is, however is suggested
-DeleteExpiredHousesOnStartup: true
+DeleteExpiredHousesOnStartup: false
 
 #Max House Level (This will prevent people from clicking 'upgrade' past this level)
 MaxHouseLevel: 6
