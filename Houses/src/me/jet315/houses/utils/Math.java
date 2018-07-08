@@ -17,7 +17,7 @@ public class Math {
      * @param getHousePriceAlgorithm The house price algorithm that is being used
      * @return the house price
      */
-    public static int calculateHousePrice(int levelHouse,String getHousePriceAlgorithm){
+    public static long calculateHousePrice(int levelHouse,String getHousePriceAlgorithm){
         //Get the calculation as a string
         String nextHousePrice = getHousePriceAlgorithm.replace("{CURRENTHOUSELEVEL}",String.valueOf(levelHouse));
 

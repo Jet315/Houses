@@ -49,7 +49,7 @@ public class HousePurchaseCommand extends CommandExecutor {
 
         //Doesn't have a house
         //Get the price of the house, check user has the funds
-        int housePrice = Core.getInstance().getProperties().getFirstHousePrice();
+        long housePrice = Core.getInstance().getProperties().getFirstHousePrice();
         if(housePrice <= 0){
             claimHouse(p,plotPlayer);
             return;
@@ -177,7 +177,7 @@ public class HousePurchaseCommand extends CommandExecutor {
 
     }
 
-    public void refundHouse(Player p, int amount){
+    public void refundHouse(Player p, long amount){
         System.out.println(ChatColor.RED + "An error occurred during the claiming house process for " + p.getName() + " If there is no following refund message, the user has not been refunded");
         /**
          * Refund Vault

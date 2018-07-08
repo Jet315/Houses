@@ -145,7 +145,7 @@ public class Core extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new LeaveEvent(),this);
         Bukkit.getPluginManager().registerEvents(new GUIClickEvent(),this);
         Bukkit.getPluginManager().registerEvents(new ChatEvent(),this);
-
+        Bukkit.getPluginManager().registerEvents(new PistonEvent(),this);
         //Plot listeners
         Bukkit.getPluginManager().registerEvents(new PlotEnterEvent(), this);
         Bukkit.getPluginManager().registerEvents(new PlotClaimEvent(), this);

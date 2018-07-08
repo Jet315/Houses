@@ -188,8 +188,8 @@ public abstract class GUI {
                     }
                 }
             }
-            if (properties.getItemsInNoHouseGUI().containsKey("CloseInventoryItem")) {
-                HouseItem item = properties.getItemsInNoHouseGUI().get("CloseInventoryItem");
+            if (properties.getItemsInHouseGUI().containsKey("CloseInventoryItem")) {
+                HouseItem item = properties.getItemsInHouseGUI().get("CloseInventoryItem");
                 houseInventory.setItem(item.getSlotID(),item.getItem());
             }
 

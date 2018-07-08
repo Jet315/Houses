@@ -73,7 +73,7 @@ public class HouseUpgradeCommand extends CommandExecutor {
 
 
         //Get the price of the house, check user has the funds
-        int housePriceUpgrade = Math.calculateHousePrice(currentHouseLevel, Core.getInstance().getProperties().getHousePriceAlgorithm());
+        long housePriceUpgrade = Math.calculateHousePrice(currentHouseLevel, Core.getInstance().getProperties().getHousePriceAlgorithm());
         if (housePriceUpgrade <= 0) {
             upgradeHouse(p, plotPlayer.getPlots().iterator().next());
             return;

@@ -69,7 +69,7 @@ public abstract class Properties extends DataFiles{
      */
     private String economyTypeToUpgrade = "TOKENS";
     private String housePriceAlgorithm = "{CURRENTHOUSELEVEL} * 500";
-    private int firstHousePrice = 500;
+    private long firstHousePrice = 500;
 
     private boolean shouldHousesExpire = true;
     private String economyTypeForRenting = "VAULT";
@@ -128,7 +128,7 @@ public abstract class Properties extends DataFiles{
          */
         economyTypeToUpgrade = super.getConfig().getString("EconomyTypeToUpgrade");
         housePriceAlgorithm = super.getConfig().getString("NextHousePrice");
-        firstHousePrice = super.getConfig().getInt("FirstHousePrice");
+        firstHousePrice = super.getConfig().getLong("FirstHousePrice");
 
         shouldHousesExpire = super.getConfig().getBoolean("ShouldHousesExpire");
         economyTypeForRenting = super.getConfig().getString("EconomyTypeToRent");
@@ -241,7 +241,7 @@ public abstract class Properties extends DataFiles{
         return givenRentTime;
     }
 
-    public int getFirstHousePrice() {
+    public long getFirstHousePrice() {
         return firstHousePrice;
     }
 

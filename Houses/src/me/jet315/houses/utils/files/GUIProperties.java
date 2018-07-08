@@ -68,7 +68,7 @@ public class GUIProperties extends Properties{
         noHouseGUIName = ChatColor.translateAlternateColorCodes('&',super.getGuiConfig().getString("NoHouseGUI.GUIName"));
         houseGUIName = ChatColor.translateAlternateColorCodes('&',super.getGuiConfig().getString("HouseGUI.GUIName"));
         noHouseGUISlots = super.getGuiConfig().getInt("NoHouseGUI.slots");
-        houseGUISlots = super.getGuiConfig().getInt("NoHouseGUI.slots");
+        houseGUISlots = super.getGuiConfig().getInt("HouseGUI.slots");
 
         //TODO refactor duplicated code
 
@@ -91,16 +91,16 @@ public class GUIProperties extends Properties{
 
                     List<String> lore = super.getGuiConfig().getStringList(path+".lore");
 
-                    List<String> formatedLore = new ArrayList<>();
+                    List<String> formattedLore = new ArrayList<>();
                     if(lore != null && lore.size() > 0){
 
                         for(String loreLine : lore){
-                            formatedLore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+                            formattedLore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
                         }
                     }
                     ItemMeta itemMeta = item.getItemMeta();
                     itemMeta.setDisplayName(displayName);
-                    itemMeta.setLore(formatedLore);
+                    itemMeta.setLore(formattedLore);
                     item.setItemMeta(itemMeta);
                     HouseItem houseItem = new HouseItem(itemName,item,slotID, super.getGuiConfig().getString(path+".commandToPerform"));
                     itemsInNoHouseGUI.put(itemName, houseItem);
