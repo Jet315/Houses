@@ -7,8 +7,12 @@ import me.jet315.houses.Core;
 import me.jet315.houses.events.HouseUnclaimEvent;
 import me.jet315.houses.manager.HousePlayer;
 import me.jet315.houses.utils.UnclaimReason;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.sql.Connection;
@@ -157,7 +161,7 @@ public abstract class Database {
                     ps.setBoolean(3, isHouseLocked);
                     ps.setLong(4, milsecondsTillExpire);
                     ps.executeUpdate();
-                    return;
+
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 } finally {
@@ -191,7 +195,7 @@ public abstract class Database {
                     conn = connection;
                     ps = conn.prepareStatement("UPDATE " + table + " SET house_locked='" + (houseLocked ? "1": "0") + "' WHERE uuid='" + playersUUID + "'");
                     ps.executeUpdate();
-                    return;
+
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 } finally {
@@ -225,7 +229,7 @@ public abstract class Database {
                     conn = connection;
                     ps = conn.prepareStatement("UPDATE " + table + " SET house_level='" + houseLevel + "' WHERE uuid='" + playersUUID + "'");
                     ps.executeUpdate();
-                    return;
+
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 } finally {
@@ -258,7 +262,7 @@ public abstract class Database {
                     conn = connection;
                     ps = conn.prepareStatement("UPDATE " + table + " SET milliseconds_of_expire='" + timeOfExpiry + "' WHERE uuid='" + playersUUID + "'");
                     ps.executeUpdate();
-                    return;
+
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 } finally {
@@ -290,7 +294,6 @@ public abstract class Database {
                     conn = connection;
                     ps = conn.prepareStatement("DELETE FROM " + table + " WHERE uuid='" + UUID +"'");
                     ps.execute();
-                    return;
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 } finally {
@@ -342,6 +345,82 @@ public abstract class Database {
         }
         return false;
     }
+
+    /**
+     * Purges the database of houses that should have expired
+     * @param p Player, can be null
+     */
+    public void purgeDatabase(CommandSender p){
+        Bukkit.getScheduler().runTaskAsynchronously(Core.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                Connection conn = null;
+                PreparedStatement ps = null;
+                long currentMilliseconds = System.currentTimeMillis();
+                ArrayList<UUID> uuids = new ArrayList<>();
+                try {
+
+                    conn = connection;
+                    ps = conn.prepareStatement("SELECT * FROM " + table);
+                    ResultSet rs = ps.executeQuery();
+                    while(rs.next()){
+                        if(rs.getLong("milliseconds_of_expire") < currentMilliseconds){
+                            //plot has expired
+                            UUID uuid = UUID.fromString(rs.getString("uuid"));
+                            uuids.add(uuid);
+                        }
+                    }
+                    rs.close();
+                    ps.close();
+
+                    if(uuids.size() != 0) {
+                        for(UUID uuid : uuids){
+                            PreparedStatement deleteRow = connection.prepareStatement("DELETE FROM " + table + " WHERE uuid='" + uuid +"'");
+                            deleteRow.execute();
+                            deleteRow.close();
+                        }
+                    }
+
+                    Bukkit.getScheduler().runTask(Core.getInstance(), new Runnable() {
+                        @Override
+                        public void run() {
+                            if(p != null){
+                                p.sendMessage(Core.getInstance().getProperties().getPluginPrefix() + ChatColor.GREEN + uuids.size() + " houses purged!");
+                            }
+                            for(UUID uuid : uuids){
+                                Set<Plot> plots = PS.get().getPlots(uuid);
+                                if(plots.size() > 0){
+                                    Plot plot = plots.iterator().next();
+                                    //Create, and trigger the HouseClaimCommand so others are able to have a say in what happens
+                                    HouseUnclaimEvent houseUnclaimEvent = new HouseUnclaimEvent(Bukkit.getOfflinePlayer(uuid),plot, UnclaimReason.TIME_EXPIRY);
+                                    Core.getInstance().getServer().getPluginManager().callEvent(houseUnclaimEvent);
+                                    plot.deletePlot(null);
+                                    if(!Core.getInstance().getProperties().getSchematicToPasteonExpiry().equalsIgnoreCase("none")){
+                                        SchematicHandler.Schematic schematic = SchematicHandler.manager.getSchematic(new File(Core.getInstance().getDataFolder(),"schematics/"+Core.getInstance().getProperties().getSchematicToPasteonExpiry()));
+                                        SchematicHandler.manager.paste(schematic, plot,Core.getInstance().getProperties().getMoveExpirySchematicXDirection(),Core.getInstance().getProperties().getMoveExpirySchematicYDirection(),Core.getInstance().getProperties().getMoveExpirySchematicZDirection(),true,null);
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                } finally {
+                    try {
+                        if (ps != null)
+                            ps.close();
+/*                        if (conn != null)
+                            conn.close();*/
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+
+        });
+    }
+
 
 /*    ExecutorService executor = Executors.newCachedThreadPool();
     Future<Boolean> future = executor.submit(new Callable<Boolean>() {

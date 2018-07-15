@@ -2,6 +2,7 @@ package me.jet315.houses.commands;
 
 import me.jet315.houses.Core;
 import me.jet315.houses.commands.admincommands.AddRentCommand;
+import me.jet315.houses.commands.admincommands.DatabasePurgeCommand;
 import me.jet315.houses.commands.admincommands.HouseEvictPlayerCommand;
 import me.jet315.houses.commands.admincommands.HouseReloadCommand;
 import me.jet315.houses.commands.defaultcommands.*;
@@ -41,6 +42,7 @@ public class CommandHandler implements org.bukkit.command.CommandExecutor {
         commands.put("reload", new HouseReloadCommand());
         commands.put("delete", new HouseEvictPlayerCommand());
         commands.put("addrent", new AddRentCommand());
+        commands.put("purge", new DatabasePurgeCommand());
     }
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
 
