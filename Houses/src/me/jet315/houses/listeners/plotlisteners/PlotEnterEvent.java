@@ -179,15 +179,15 @@ public class PlotEnterEvent implements Listener{
             p.sendTitle(locale.getDeniedTitle().equalsIgnoreCase("none") ? "": locale.getDeniedTitle(),locale.getDeniedSubTitle().equalsIgnoreCase("none") ? "": locale.getDeniedSubTitle());
         }
 
-        ensurePlayerIsKickedOutOfPlot(plot,p,plotMiddle);
+        ensurePlayerIsKickedOutOfPlot(plot,p);
     }
 
-    public void ensurePlayerIsKickedOutOfPlot(Plot plot, Player p, org.bukkit.Location middle){
+    public void ensurePlayerIsKickedOutOfPlot(Plot plot, Player p/*, org.bukkit.Location middle*/){
         Bukkit.getScheduler().runTaskLater(Core.getInstance(), new Runnable() {
             @Override
             public void run() {
                 if(plot.getPlayersInPlot().contains(PlotPlayer.get(p.getName()))){
-                    p.setVelocity(p.getLocation().toVector().subtract(middle.toVector()).divide(new Vector(8,0,8)).setY(0.5));
+                    p.teleport(new org.bukkit.Location(Bukkit.getWorld(Core.getInstance().getProperties().getPlotsWorldName()),plot.getDefaultHome().getX(),plot.getDefaultHome().getY(),plot.getDefaultHome().getZ(),plot.getDefaultHome().getYaw(),plot.getDefaultHome().getPitch()));
                 }
             }
         },10L);
