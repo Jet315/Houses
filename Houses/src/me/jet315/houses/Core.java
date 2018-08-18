@@ -26,6 +26,8 @@ public class Core extends JavaPlugin{
     private static Core instance;
     public static String serverVersion;
 
+    public static String userID = "%%__USER__%%";
+
     private GUIProperties properties;
     private Locale messages;
     private Database db;
@@ -34,7 +36,6 @@ public class Core extends JavaPlugin{
     /**
      * Vault - An API allowing me to get economy of players
      */
-    private boolean isVaultEnabled = false;
     public static Economy economy = null;
 
     private boolean isTokenManagerEnabled = false;
@@ -87,7 +88,7 @@ public class Core extends JavaPlugin{
             new PlaceHolderRequest().register();
         }
         
-        System.out.println("[Houses] Initializing Complete - Time took " + String.valueOf(System.currentTimeMillis()-startTime) +"Ms\n");
+        System.out.println("[Houses] Initializing Complete in" + String.valueOf(System.currentTimeMillis()-startTime) + " Ms\n");
 
 
         /**
@@ -173,7 +174,6 @@ public class Core extends JavaPlugin{
 
         //Possible Dependencies
         if(Bukkit.getPluginManager().isPluginEnabled("Vault")){
-            isVaultEnabled = true;
             RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
             if (economyProvider != null) {
                 economy = economyProvider.getProvider();
@@ -184,7 +184,6 @@ public class Core extends JavaPlugin{
             }
         }
     }
-
     /**
      * Sets the economy up
      */
@@ -206,9 +205,6 @@ public class Core extends JavaPlugin{
         return isTokenManagerEnabled;
     }
 
-    public boolean isVaultEnabled() {
-        return isVaultEnabled;
-    }
 
     public Locale getMessages() {
         return messages;

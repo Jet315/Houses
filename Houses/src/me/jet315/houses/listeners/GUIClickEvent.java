@@ -216,7 +216,7 @@ public class GUIClickEvent implements Listener {
                      */
                     if (Core.getInstance().getProperties().getEconomyTypeForRenting().equalsIgnoreCase("vault")) {
                         //Vault is not installed on the server, good luck using a null field :(
-                        if (!Core.getInstance().isVaultEnabled()) {
+                        if (Core.economy == null) {
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + "&cVault is not installed on the server. Please contact the server owner."));
                             closeAndUpdateInventory(p);
                             return;

@@ -20,7 +20,7 @@ import java.util.UUID;
 public class HouseAbandon extends CommandExecutor {
 
     /**
-     * House Trust Command
+     * House Abandon Command
      */
 
     public HouseAbandon() {

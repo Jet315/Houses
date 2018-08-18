@@ -85,7 +85,7 @@ public class HouseUpgradeCommand extends CommandExecutor {
          */
         if (Core.getInstance().getProperties().getEconomyTypeToUpgrade().equalsIgnoreCase("vault")) {
             //Vault is not installed on the server, good luck using a null field :(
-            if (!Core.getInstance().isVaultEnabled()) {
+            if (Core.economy == null) {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + "&cVault is not installed on the server. Please contact the server owner."));
                 return;
             }

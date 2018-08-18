@@ -14,11 +14,6 @@ public class PlaceHolderRequest extends PlaceholderExpansion {
     }
 
     @Override
-    public String getPlugin() {
-        return "Houses";
-    }
-
-    @Override
     public String getAuthor() {
         return "Jet315";
     }
