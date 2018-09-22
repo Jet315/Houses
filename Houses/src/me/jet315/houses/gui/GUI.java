@@ -49,12 +49,12 @@ public abstract class GUI {
             houseInventory = Bukkit.createInventory(null, Core.getInstance().getProperties().getNoHouseGUISlots(),Core.getInstance().getProperties().getNoHouseGUIName());
 
             //User does not have house
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.world"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.world") || p.hasPermission("house.player.*"))
                 if (properties.getItemsInNoHouseGUI().containsKey("TeleportToHouseWorldItem")) {
                     HouseItem item = properties.getItemsInNoHouseGUI().get("TeleportToHouseWorldItem");
                     houseInventory.setItem(item.getSlotID(),item.getItem());
                 }
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.purchase"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.purchase") || p.hasPermission("house.player.*"))
                 if (properties.getItemsInNoHouseGUI().containsKey("PurchaseHomeItem")) {
                     HouseItem item = properties.getItemsInNoHouseGUI().get("PurchaseHomeItem");
                     ItemStack itemStack = item.getItem().clone();
@@ -72,7 +72,7 @@ public abstract class GUI {
                     }
                     houseInventory.setItem(item.getSlotID(),itemStack);
                 }
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.find"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.find") || p.hasPermission("house.player.*"))
                 if (properties.getItemsInNoHouseGUI().containsKey("FindHomeItem")) {
                     HouseItem item = properties.getItemsInNoHouseGUI().get("FindHomeItem");
                     houseInventory.setItem(item.getSlotID(),item.getItem());
@@ -83,36 +83,41 @@ public abstract class GUI {
                 houseInventory.setItem(item.getSlotID(),item.getItem());
             }
 
+            for(HouseItem houseItem : properties.getItemsInNoHouseGUI().values()){
+                if(houseItem.getItemName().contains("EmptyItem")){
+                    houseInventory.setItem(houseItem.getSlotID(),houseItem.getItem());
+                }
+            }
         } else {
             houseInventory = Bukkit.createInventory(null, Core.getInstance().getProperties().getHouseGUISlots(),Core.getInstance().getProperties().getHouseGUIName());
 
             //User has house!
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.world"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.world") || p.hasPermission("house.player.*"))
                 if (properties.getItemsInHouseGUI().containsKey("TeleportToHouseWorldItem")) {
                     HouseItem item = properties.getItemsInHouseGUI().get("TeleportToHouseWorldItem");
                     houseInventory.setItem(item.getSlotID(),item.getItem());
 
                 }
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.tp"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.tp") || p.hasPermission("house.player.*"))
                 if (properties.getItemsInHouseGUI().containsKey("TeleportToHouseItem")) {
                     HouseItem item = properties.getItemsInHouseGUI().get("TeleportToHouseItem");
                     houseInventory.setItem(item.getSlotID(),item.getItem());
 
                 }
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.find"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.find") || p.hasPermission("house.player.*"))
                 if (properties.getItemsInHouseGUI().containsKey("FindHomeItem")) {
                     HouseItem item = properties.getItemsInHouseGUI().get("FindHomeItem");
                     houseInventory.setItem(item.getSlotID(),item.getItem());
 
                 }
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.trust"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.trust") || p.hasPermission("house.player.*"))
                 if (properties.getItemsInHouseGUI().containsKey("TrustPlayerItem")) {
                     HouseItem item = properties.getItemsInHouseGUI().get("TrustPlayerItem");
                     houseInventory.setItem(item.getSlotID(),item.getItem());
 
                 }
 
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.upgrade")) {
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.upgrade") || p.hasPermission("house.player.*")) {
 
                 if(!(houseLevel() >= Core.getInstance().getProperties().getMaxHouseLevel())) {
                     //not max house level
@@ -140,7 +145,7 @@ public abstract class GUI {
                 }
 
             }
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.rent")) {
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.rent") || p.hasPermission("house.player.*")){
 
                 if (properties.getItemsInHouseGUI().containsKey("IncreaseRentItem")) {
                     HouseItem item = properties.getItemsInHouseGUI().get("IncreaseRentItem");
@@ -169,13 +174,13 @@ public abstract class GUI {
 
 
             }
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.abandon"))
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.abandon") || p.hasPermission("house.player.*"))
                 if (properties.getItemsInHouseGUI().containsKey("AbandonHome")) {
                     HouseItem item = properties.getItemsInHouseGUI().get("AbandonHome");
                     houseInventory.setItem(item.getSlotID(),item.getItem());
                 }
 
-            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.lock")) {
+            if (properties.isShowGUIItemsWithoutPermission() || p.hasPermission("house.player.lock") || p.hasPermission("house.player.*")){
                 if (isHouseLocked()) {
                     if (properties.getItemsInHouseGUI().containsKey("LockHomeItem")) {
                         HouseItem item = properties.getItemsInHouseGUI().get("LockHomeItem");
@@ -194,6 +199,11 @@ public abstract class GUI {
             }
 
 
+            for(HouseItem houseItem : properties.getItemsInHouseGUI().values()){
+                if(houseItem.getItemName().contains("EmptyItem")){
+                    houseInventory.setItem(houseItem.getSlotID(),houseItem.getItem());
+                }
+            }
         }
         p.openInventory(houseInventory);
     }
