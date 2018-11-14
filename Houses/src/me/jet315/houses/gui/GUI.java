@@ -31,6 +31,7 @@ public abstract class GUI {
         this.properties = instance.getProperties();
     }
 
+    //TODO Pretty poorly coded with a lot of duplicated code, need to change this
     /**
      * Opens the House GUI for a particular player
      *
@@ -162,7 +163,7 @@ public abstract class GUI {
                         ));
                         List<String> formattedLore = new ArrayList<>();
                         for (String loreLine : itemStack.getItemMeta().getLore()) {
-                            formattedLore.add(loreLine.replaceAll("%RENTTIMELEFT%", expiry));
+                            formattedLore.add(Core.getInstance().getPlaceHolderParser().addPlaceHolders(p,loreLine).replaceAll("%RENTTIMELEFT%", expiry));
                         }
                         ItemMeta meta = itemStack.getItemMeta();
                         meta.setLore(formattedLore);
@@ -201,7 +202,15 @@ public abstract class GUI {
 
             for(HouseItem houseItem : properties.getItemsInHouseGUI().values()){
                 if(houseItem.getItemName().contains("EmptyItem")){
-                    houseInventory.setItem(houseItem.getSlotID(),houseItem.getItem());
+                    List<String> formattedLore = new ArrayList<>();
+                    ItemStack itemStack = houseItem.getItem().clone();
+                    for (String loreLine : itemStack.getItemMeta().getLore()) {
+                        formattedLore.add(Core.getInstance().getPlaceHolderParser().addPlaceHolders(p,loreLine));
+                    }
+                    ItemMeta meta = itemStack.getItemMeta();
+                    meta.setLore(formattedLore);
+                    itemStack.setItemMeta(meta);
+                    houseInventory.setItem(houseItem.getSlotID(),itemStack);
                 }
             }
         }

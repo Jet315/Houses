@@ -149,15 +149,15 @@ public class HousePurchaseCommand extends CommandExecutor {
                             if (EconHandler.manager != null) {
                                 for (PlotArea area : PS.get().getPlotAreaManager().getAllPlotAreas()) {
                                     if (plotArea != null) {
-                                        plotArea = null;
+                                        plotArea = area;
                                         break;
                                     }
-                                    plotArea = area;
+                                    plotArea = null;
 
                                 }
                             }
                         }
-                        if (plotArea.TYPE == 2) {
+                        if (plotArea == null || plotArea.TYPE == 2) {
                             p.sendMessage(Core.getInstance().getProperties().getPluginPrefix() + ChatColor.RED + "No free plots!");
                             return;
                         }

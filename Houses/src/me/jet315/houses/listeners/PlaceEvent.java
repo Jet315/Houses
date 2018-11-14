@@ -18,6 +18,7 @@ public class PlaceEvent  implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e){
 
+
         if(e.getBlockPlaced().getLocation().getWorld().getName().equalsIgnoreCase(Core.getInstance().getProperties().getPlotsWorldName())){
             if(e.getBlockPlaced().getLocation().getBlockY() >= Core.getInstance().getProperties().getGetMaxBuildHeight()){
                 if(e.getPlayer().hasPermission("house.admin.build")) return;

@@ -55,8 +55,7 @@ public class Math {
                 return 18000;
         }
         return 18000;
-    }
-*/
+    }*/
 
     /**
      *

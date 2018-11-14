@@ -5,6 +5,7 @@ import me.jet315.houses.listeners.*;
 import me.jet315.houses.listeners.plotlisteners.PlotClaimEvent;
 import me.jet315.houses.listeners.plotlisteners.PlotEnterEvent;
 import me.jet315.houses.manager.HouseExpireTask;
+import me.jet315.houses.manager.ParsePlaceHolders;
 import me.jet315.houses.manager.PlayerManager;
 import me.jet315.houses.utils.files.GUIProperties;
 import me.jet315.houses.utils.LoadSchematics;
@@ -26,12 +27,11 @@ public class Core extends JavaPlugin{
     private static Core instance;
     public static String serverVersion;
 
-    public static String userID = "%%__USER__%%";
-
     private GUIProperties properties;
     private Locale messages;
     private Database db;
     private PlayerManager playerManager;
+    private ParsePlaceHolders placeHolderParser;
 
     /**
      * Vault - An API allowing me to get economy of players
@@ -48,8 +48,6 @@ public class Core extends JavaPlugin{
         long startTime = System.currentTimeMillis();
         System.out.println("\n[Houses] Initializing Plugin");
         instance = this;
-
-
         //Loads the config & default value
         properties = new GUIProperties(this);
 
@@ -60,6 +58,9 @@ public class Core extends JavaPlugin{
 
         //PlayerManager
         playerManager = new PlayerManager();
+
+        //Placeholder parser
+        placeHolderParser = new ParsePlaceHolders(Bukkit.getPluginManager().isPluginEnabled("PlaceHolderAPI"));
         //Load schematics
         new LoadSchematics(this);
 
@@ -87,7 +88,6 @@ public class Core extends JavaPlugin{
             //Registering placeholder will be use here
             new PlaceHolderRequest().register();
         }
-        
         System.out.println("[Houses] Initializing Complete in" + String.valueOf(System.currentTimeMillis()-startTime) + " Ms\n");
 
 
@@ -212,6 +212,10 @@ public class Core extends JavaPlugin{
 
     public boolean isTokenEnchantEnabled() {
         return isTokenEnchantEnabled;
+    }
+
+    public ParsePlaceHolders getPlaceHolderParser() {
+        return placeHolderParser;
     }
 
 

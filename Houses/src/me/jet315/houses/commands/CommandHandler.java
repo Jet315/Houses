@@ -38,6 +38,7 @@ public class CommandHandler implements org.bukkit.command.CommandExecutor {
         commands.put("locate", new HouseLocateCommand());
         commands.put("trustlist", new HouseTrustListCommand());
         commands.put("about", new HouseAboutCommand());
+        commands.put("claim", new HouseClaimCommand());
 
         //Admin commands
         commands.put("reload", new HouseReloadCommand());
@@ -76,8 +77,10 @@ public class CommandHandler implements org.bukkit.command.CommandExecutor {
                     final CommandExecutor command = commands.get(name);
 
                     if (command.getPermission() != null && !sender.hasPermission(command.getPermission())) {
+                        if(!(command.getPermission().startsWith("house.player") && sender.hasPermission("house.player.*"))) {
                             sender.sendMessage(Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getNoPermissionMessage());
                             return true;
+                        }
 
                     }
 
@@ -101,7 +104,7 @@ public class CommandHandler implements org.bukkit.command.CommandExecutor {
                     return true;
                 }
             }
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + "&cUnknown Command"));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getNonExistentPlotCommand()));
         }
         return true;
     }

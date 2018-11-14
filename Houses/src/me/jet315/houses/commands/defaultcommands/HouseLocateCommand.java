@@ -9,6 +9,7 @@ import com.intellectualcrafters.plot.util.EconHandler;
 import com.intellectualcrafters.plot.util.MainUtil;
 import me.jet315.houses.Core;
 import me.jet315.houses.commands.CommandExecutor;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -36,75 +37,86 @@ public class HouseLocateCommand extends CommandExecutor {
         //Can cast as was already checked
         Player p = (Player) sender;
         PlotPlayer plotPlayer = PlotPlayer.get(p.getName());
-        PlotArea plotArea = plotPlayer.getApplicablePlotArea();
+        int timeToWait = Core.getInstance().getProperties().gettimeToWaitWhenTeleporting();
 
-        if (p.getWorld().getName().equalsIgnoreCase(Core.getInstance().getProperties().getPlotsWorldName())) {
-            if (plotArea == null) {
-                if (EconHandler.manager != null) {
-                    for (PlotArea area : PS.get().getPlotAreaManager().getAllPlotAreas()) {
+
+        if (!p.getWorld().getName().equalsIgnoreCase(Core.getInstance().getProperties().getPlotsWorldName())) {
+            if(timeToWait >= 1) {
+                p.sendMessage(Core.getInstance().getProperties().getPluginPrefix() + ChatColor.RED + "No free plots in this world!");
+                return;
+            }
+            p.teleport(Bukkit.getWorld(Core.getInstance().getProperties().getPlotsWorldName()).getSpawnLocation());
+        }
+        Bukkit.getScheduler().runTaskLater(Core.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+
+                PlotArea plotArea = plotPlayer.getApplicablePlotArea();
+                if (plotArea == null) {
+                    if (EconHandler.manager != null) {
+                        for (PlotArea area : PS.get().getPlotAreaManager().getAllPlotAreas()) {
                             if (plotArea != null) {
                                 plotArea = null;
                                 break;
                             }
                             plotArea = area;
 
+                        }
                     }
-                }
                 }
                 if (plotArea.TYPE == 2) {
                     p.sendMessage(Core.getInstance().getProperties().getPluginPrefix() + ChatColor.RED + "No free plots!");
                     return;
                 }
 
-            int timeToWait = Core.getInstance().getProperties().gettimeToWaitWhenTeleporting();
-            if(timeToWait <= 0) {
-                plotPlayer.teleport(plotArea.getNextFreePlot(plotPlayer, PlotId.fromString(plotArea.id)).getDefaultHome());
-            }else {
+                if (timeToWait <= 0) {
+                    plotPlayer.teleport(plotArea.getNextFreePlot(plotPlayer, PlotId.fromString(plotArea.id)).getDefaultHome());
+                } else {
 
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getMessages().getTimeToWait().replaceAll("%SECONDS%", String.valueOf(timeToWait))));
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getMessages().getTimeToWait().replaceAll("%SECONDS%", String.valueOf(timeToWait))));
 
-                PlotArea finalPlotArea = plotArea;
-                new BukkitRunnable() {
-                    int counter = 0;
-                    int playersX = p.getLocation().getBlockX();
-                    int playersY = p.getLocation().getBlockY();
-                    int playersZ = p.getLocation().getBlockZ();
-                    World world = p.getWorld();
+                    PlotArea finalPlotArea = plotArea;
+                    new BukkitRunnable() {
+                        int counter = 0;
+                        int playersX = p.getLocation().getBlockX();
+                        int playersY = p.getLocation().getBlockY();
+                        int playersZ = p.getLocation().getBlockZ();
+                        World world = p.getWorld();
 
-                    @Override
-                    public void run() {
-                        if (!p.isOnline()) {
-                            cancel();
-                            return;
+                        @Override
+                        public void run() {
+                            if (!p.isOnline()) {
+                                cancel();
+                                return;
+                            }
+                            if (p.getWorld() != world) {
+                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getPlayerMovedWhileTryingToTeleport()));
+                                cancel();
+                                return;
+                            }
+                            if (p.getLocation().getBlockX() != playersX || p.getLocation().getBlockY() != playersY || p.getLocation().getBlockZ() != playersZ) {
+                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getPlayerMovedWhileTryingToTeleport()));
+                                cancel();
+                                return;
+                            }
+                            if (counter < timeToWait) {
+                                counter++;
+                            } else {
+
+                                plotPlayer.teleport(finalPlotArea.getNextFreePlot(plotPlayer, PlotId.fromString(finalPlotArea.id)).getDefaultHome());
+                                cancel();
+                                return;
+                            }
+
                         }
-                        if (p.getWorld() != world) {
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getPlayerMovedWhileTryingToTeleport()));
-                            cancel();
-                            return;
-                        }
-                        if (p.getLocation().getBlockX() != playersX || p.getLocation().getBlockY() != playersY || p.getLocation().getBlockZ() != playersZ) {
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getPlayerMovedWhileTryingToTeleport()));
-                            cancel();
-                            return;
-                        }
-                        if (counter < timeToWait) {
-                            counter++;
-                        } else {
+                    }.runTaskTimer(Core.getInstance(), 10, 20);
 
-                            plotPlayer.teleport(finalPlotArea.getNextFreePlot(plotPlayer, PlotId.fromString(finalPlotArea.id)).getDefaultHome());
-                            cancel();
-                            return;
-                        }
-
-                    }
-                }.runTaskTimer(Core.getInstance(), 0, 20);
-
+                }
             }
 
-            } else {
-                //TODO NOT IN PLOTS WORLD
-            }
+        },10L);
         }
-
-
 }
+
+
+

@@ -33,7 +33,6 @@ public class LoadSchematics {
         if(schematicFolder.list().length == 0){
             for(int i = 1; i<=6;i++){
                 try {
-                    System.out.println("here " + i);
                     InputStream resource = instance.getResource("schematics/house"+i+".schematic");
                     File outputFile = new File(instance.getDataFolder() + File.separator +"schematics/house"+i+".schematic");
                     FileUtils.copyInputStreamToFile(resource, outputFile);

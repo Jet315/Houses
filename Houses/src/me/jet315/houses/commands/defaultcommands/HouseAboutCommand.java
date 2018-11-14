@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 
 public class HouseAboutCommand extends CommandExecutor {
 
+    public String userID = "%%__USER__%%";
 
     public HouseAboutCommand() {
         setCommand("about");
@@ -23,7 +24,7 @@ public class HouseAboutCommand extends CommandExecutor {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7Plugin Version:&e " + Core.getInstance().getDescription().getVersion()));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7Author:&e " + Core.getInstance().getDescription().getAuthors()));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7Website:&e " + Core.getInstance().getDescription().getWebsite()));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cPlugin registered to:&4 https://www.spigotmc.org/members/" + Core.userID));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cPlugin registered to:&4 https://www.spigotmc.org/members/" + userID));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7&m---------------------------------"));
     }
 }

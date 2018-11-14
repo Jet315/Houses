@@ -190,6 +190,9 @@ public class HouseUpgradeCommand extends CommandExecutor {
                      */
                     for (PlotPlayer playerInPlot : plot.getPlayersInPlot()) {
                         playerInPlot.teleport(plot.getDefaultHome());
+
+                                    // playerInPlot.teleport(new Location("world",-87,6,-71,(float) -90,(float)4));
+
                         playerInPlot.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + "&cThis house is being upgraded!"));
                     }
                 } else if (counter == 2) {
@@ -269,8 +272,6 @@ public class HouseUpgradeCommand extends CommandExecutor {
                 }
             }
         }, 0L, 50L);
-
-
     }
 
     /**

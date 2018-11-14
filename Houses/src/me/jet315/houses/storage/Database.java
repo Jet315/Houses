@@ -99,7 +99,6 @@ public abstract class Database {
                 try {
                     conn = connection;
                     ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE uuid = '" + playersUUID + "';");
-
                     rs = ps.executeQuery();
                     while (rs.next()) {
                         long milisecondTillExpire = rs.getLong("milliseconds_of_expire");

@@ -3,6 +3,7 @@ package me.jet315.houses.commands.defaultcommands;
 
 import com.intellectualcrafters.plot.api.PlotAPI;
 import com.intellectualcrafters.plot.commands.Chat;
+import com.intellectualcrafters.plot.object.Location;
 import com.intellectualcrafters.plot.object.Plot;
 import com.intellectualcrafters.plot.object.PlotManager;
 import com.intellectualcrafters.plot.object.PlotPlayer;
@@ -76,6 +77,7 @@ public class HouseLockCommand extends CommandExecutor {
                     if(playerInPlot.getName().equalsIgnoreCase(p.getName())) continue;
                     if(plot.getTrusted().contains(playerInPlot.getUUID())) continue;
                     playerInPlot.teleport(plot.getDefaultHome());
+                    //playerInPlot.teleport(new Location("world",-87,6,-71,(float) -90,(float)4));
                     playerInPlot.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + locale.getHouseLockedMessageToVisitors()));
                 }
 

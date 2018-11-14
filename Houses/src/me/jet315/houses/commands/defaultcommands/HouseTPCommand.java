@@ -1,10 +1,12 @@
 package me.jet315.houses.commands.defaultcommands;
 
+import com.intellectualcrafters.plot.object.Plot;
 import com.intellectualcrafters.plot.object.PlotArea;
 import com.intellectualcrafters.plot.object.PlotId;
 import com.intellectualcrafters.plot.object.PlotPlayer;
 import me.jet315.houses.Core;
 import me.jet315.houses.commands.CommandExecutor;
+import me.jet315.houses.events.TeleportToHouseEvent;
 import me.jet315.houses.utils.Locale;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -43,7 +45,11 @@ public class HouseTPCommand extends CommandExecutor {
             if(plotPlayer.getPlots().size() > 0){
                 int timeToWait = Core.getInstance().getProperties().gettimeToWaitWhenTeleporting();
                 if(timeToWait <= 0) {
-                    plotPlayer.getPlots().iterator().next().teleportPlayer(plotPlayer);
+                    Plot plot = plotPlayer.getPlots().iterator().next();
+                    TeleportToHouseEvent houseTeleportEvent = new TeleportToHouseEvent(p,plot);
+                    Core.getInstance().getServer().getPluginManager().callEvent(houseTeleportEvent);
+                    if(houseTeleportEvent.isCancelled()) return;
+                    plot.teleportPlayer(plotPlayer);
                 }else {
 
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getMessages().getTimeToWait().replaceAll("%SECONDS%", String.valueOf(timeToWait))));
@@ -75,8 +81,11 @@ public class HouseTPCommand extends CommandExecutor {
                             if (counter < timeToWait) {
                                 counter++;
                             } else {
-
-                                plotPlayer.getPlots().iterator().next().teleportPlayer(plotPlayer);
+                                Plot plot = plotPlayer.getPlots().iterator().next();
+                                TeleportToHouseEvent houseTeleportEvent = new TeleportToHouseEvent(p,plot);
+                                Core.getInstance().getServer().getPluginManager().callEvent(houseTeleportEvent);
+                                if(houseTeleportEvent.isCancelled()) return;
+                                plot.teleportPlayer(plotPlayer);
                                 cancel();
                                 return;
                             }

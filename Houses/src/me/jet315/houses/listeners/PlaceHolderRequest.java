@@ -56,7 +56,7 @@ public class PlaceHolderRequest extends PlaceholderExpansion {
         }
         if(s.equalsIgnoreCase("lock_status")){
             if(!Core.getInstance().getPlayerManager().getHousePlayerMap().containsKey(player)) return "false";
-            return String.valueOf(Core.getInstance().getPlayerManager().getHousePlayerMap().get(player).getIsHouseLocked());
+            return String.valueOf(Core.getInstance().getPlayerManager().getHousePlayerMap().get(player).getIsHouseLocked())/*.equalsIgnoreCase("false") ? ChatColor.GREEN + "" + ChatColor.BOLD + "✔ UNLOCKED" : ChatColor.RED + "" + ChatColor.BOLD + "LOCKED ✖" */;
         }
 
         if(s.equalsIgnoreCase("next_upgrade_price")){
