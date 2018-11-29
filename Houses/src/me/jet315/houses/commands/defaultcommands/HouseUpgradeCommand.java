@@ -148,7 +148,7 @@ public class HouseUpgradeCommand extends CommandExecutor {
         Core.getInstance().getServer().getPluginManager().callEvent(houseUpgradeEvent);
 
         if (houseUpgradeEvent.isCancelled()) return;
-        p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + "&e&lUpgrading House!"));
+        p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getHouseUpgradeStartedOwner()));
         /**
          * Stores the level the house is going to
          */
@@ -193,7 +193,7 @@ public class HouseUpgradeCommand extends CommandExecutor {
 
                                     // playerInPlot.teleport(new Location("world",-87,6,-71,(float) -90,(float)4));
 
-                        playerInPlot.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + "&cThis house is being upgraded!"));
+                        playerInPlot.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getHouseUpgradeStarted()));
                     }
                 } else if (counter == 2) {
                     /**
@@ -267,7 +267,7 @@ public class HouseUpgradeCommand extends CommandExecutor {
                     Core.getInstance().getPlayerManager().getHousePlayerMap().get(p).setIsHouseBeingUpgraded(false);
 
                     //Send user a message saying it's done
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + "&aHome has successfully been upgraded! Items from your previous house will be in chests!"));
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getHouseUpgradeComplete()));
                     return;
                 }
             }

@@ -83,10 +83,19 @@ public abstract class GUI {
                 HouseItem item = properties.getItemsInNoHouseGUI().get("CloseInventoryItem");
                 houseInventory.setItem(item.getSlotID(),item.getItem());
             }
-
             for(HouseItem houseItem : properties.getItemsInNoHouseGUI().values()){
                 if(houseItem.getItemName().contains("EmptyItem")){
-                    houseInventory.setItem(houseItem.getSlotID(),houseItem.getItem());
+                    ItemStack itemStack = houseItem.getItem().clone();
+                    if(itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore()) {
+                        List<String> formattedLore = new ArrayList<>();
+                        for (String loreLine : itemStack.getItemMeta().getLore()) {
+                            formattedLore.add(Core.getInstance().getPlaceHolderParser().addPlaceHolders(p, loreLine));
+                        }
+                        ItemMeta meta = itemStack.getItemMeta();
+                        meta.setLore(formattedLore);
+                        itemStack.setItemMeta(meta);
+                    }
+                    houseInventory.setItem(houseItem.getSlotID(),itemStack);
                 }
             }
         } else {
@@ -202,14 +211,17 @@ public abstract class GUI {
 
             for(HouseItem houseItem : properties.getItemsInHouseGUI().values()){
                 if(houseItem.getItemName().contains("EmptyItem")){
-                    List<String> formattedLore = new ArrayList<>();
+
                     ItemStack itemStack = houseItem.getItem().clone();
-                    for (String loreLine : itemStack.getItemMeta().getLore()) {
-                        formattedLore.add(Core.getInstance().getPlaceHolderParser().addPlaceHolders(p,loreLine));
+                    if(itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore()) {
+                        List<String> formattedLore = new ArrayList<>();
+                        for (String loreLine : itemStack.getItemMeta().getLore()) {
+                            formattedLore.add(Core.getInstance().getPlaceHolderParser().addPlaceHolders(p, loreLine));
+                        }
+                        ItemMeta meta = itemStack.getItemMeta();
+                        meta.setLore(formattedLore);
+                        itemStack.setItemMeta(meta);
                     }
-                    ItemMeta meta = itemStack.getItemMeta();
-                    meta.setLore(formattedLore);
-                    itemStack.setItemMeta(meta);
                     houseInventory.setItem(houseItem.getSlotID(),itemStack);
                 }
             }

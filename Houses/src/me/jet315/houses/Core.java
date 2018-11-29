@@ -88,7 +88,7 @@ public class Core extends JavaPlugin{
             //Registering placeholder will be use here
             new PlaceHolderRequest().register();
         }
-        System.out.println("[Houses] Initializing Complete in" + String.valueOf(System.currentTimeMillis()-startTime) + " Ms\n");
+        System.out.println("[Houses] Initializing Complete in " + String.valueOf(System.currentTimeMillis()-startTime) + " Ms\n");
 
 
         /**
@@ -161,6 +161,7 @@ public class Core extends JavaPlugin{
         }else{
             if(properties.getEconomyTypeToUpgrade().equalsIgnoreCase("tokens") || properties.getEconomyTypeForRenting().equalsIgnoreCase("tokens")){
                 System.out.println(ChatColor.RED + "[HOUSES ERROR NOTICE] You have Tokens as an economy type enabled yet TokenManager is not installed!");
+
             }
         }
 

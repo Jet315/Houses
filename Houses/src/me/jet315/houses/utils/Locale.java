@@ -117,6 +117,14 @@ public class Locale {
     private String timeToWait = "please wait";
     private String playerMovedWhileTryingToTeleport = "you moved";
 
+    private String houseUpgradeComplete = "House has been upgraded";
+    private String houseLocate = "House is being located";
+    private String commandHelp = "Command usage: {COMMAND_USAGE}";
+    private String houseUpgradeStarted = "House being upgraded";
+    private String houseUpgradeStartedOwner = "House being upgraded";
+
+
+
     //Constructor
     public Locale(Core instance, String localeName) {
         this.plugin = instance;
@@ -264,16 +272,14 @@ public class Locale {
 
         purchasedTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("PurchasedTitle"));
         purchaseSubTitle = ChatColor.translateAlternateColorCodes('&',locale.getString("PurchasedSubTitle"));
+        timeToWait = ChatColor.translateAlternateColorCodes('&',locale.getString("TimeToWait"));
+        playerMovedWhileTryingToTeleport = ChatColor.translateAlternateColorCodes('&',locale.getString("PlayerMovedWhileTryingToTeleport"));
 
-        try {
-            timeToWait = ChatColor.translateAlternateColorCodes('&',locale.getString("TimeToWait"));
-            playerMovedWhileTryingToTeleport = ChatColor.translateAlternateColorCodes('&',locale.getString("PlayerMovedWhileTryingToTeleport"));
-        } catch (Exception e) {
-            System.out.println(ChatColor.RED + "[HOUSES] WARNING");
-            System.out.println(ChatColor.RED + "The locale configuration file has not been updated correctly (missing version 2.8 update notes) See recent updates & how to update");
-        }
-
-
+        houseUpgradeComplete = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUpgradeComplete"));
+        houseLocate = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseLocate"));
+        commandHelp = ChatColor.translateAlternateColorCodes('&',locale.getString("CommandHelp"));
+        houseUpgradeStarted = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUpgradeStarted"));
+        houseUpgradeStartedOwner = ChatColor.translateAlternateColorCodes('&',locale.getString("HouseUpgradeStartedOwner"));
 
     }
 
@@ -525,5 +531,25 @@ public class Locale {
 
     public String getPlayerMovedWhileTryingToTeleport() {
         return playerMovedWhileTryingToTeleport;
+    }
+
+    public String getHouseUpgradeComplete() {
+        return houseUpgradeComplete;
+    }
+
+    public String getHouseLocate() {
+        return houseLocate;
+    }
+
+    public String getCommandHelp() {
+        return commandHelp;
+    }
+
+    public String getHouseUpgradeStarted() {
+        return houseUpgradeStarted;
+    }
+
+    public String getHouseUpgradeStartedOwner() {
+        return houseUpgradeStartedOwner;
     }
 }

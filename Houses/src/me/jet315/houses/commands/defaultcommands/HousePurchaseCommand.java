@@ -121,7 +121,7 @@ public class HousePurchaseCommand extends CommandExecutor {
         //Teleport player to the plot world, wait a second, run the plot claim command
 
         //The House Claim Event is called when the plot is created, so no need to call it here. Possibly need to move it here though
-        p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + "&aLocating a house! Please standby!"));
+        p.sendMessage(ChatColor.translateAlternateColorCodes('&',Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getHouseLocate()));
         if(!p.getWorld().getName().equalsIgnoreCase(Core.getInstance().getProperties().getPlotsWorldName())){
             //Not in the plot world, teleport there
             World world = Bukkit.getWorld(Core.getInstance().getProperties().getPlotsWorldName());

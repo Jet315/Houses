@@ -96,7 +96,7 @@ public class CommandHandler implements org.bukkit.command.CommandExecutor {
                     }
 
                     if (command.getLength() > args.length) {
-                        sender.sendMessage(ChatColor.RED + "Usage: " + command.getUsage());
+                        sender.sendMessage(Core.getInstance().getProperties().getPluginPrefix() + Core.getInstance().getMessages().getCommandHelp().replaceAll("%COMMAND_USAGE%", command.getUsage()));
                         return true;
                     }
 

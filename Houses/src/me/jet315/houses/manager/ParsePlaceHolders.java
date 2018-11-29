@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 public class ParsePlaceHolders {
 
 
-    private boolean isPlaceHolderAPIActive = false;
+    private boolean isPlaceHolderAPIActive;
 
     public ParsePlaceHolders(boolean isPlaceHolderAPIActive){
         this.isPlaceHolderAPIActive = isPlaceHolderAPIActive;
